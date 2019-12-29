@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AKangaroo</string>
+
+    <!--日期相关-->
+    <string name="today" translatable="false">今天</string>
+    <string name="yesterday" translatable="false">昨天</string>
+    <string name="tomorrow" translatable="false">明天</string>
+
+</resources>
