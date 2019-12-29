@@ -1,5 +1,7 @@
 package com.zeke.kangaroo.utils;
 
+import android.annotation.SuppressLint;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,8 +11,10 @@ import java.util.Locale;
 
 /**
  * date 16/4/21
- * description
+ * description 日期工具类
  */
+@SuppressWarnings("unused")
+@SuppressLint("SimpleDateFormat")
 public class DateUtils {
 
     public static Date strToDate(String strDate) throws ParseException {
@@ -90,9 +94,10 @@ public class DateUtils {
 
 
     /**
-     * @return Date数组。第一位是当年的第一天和第二位是当年的最后一天。
-     * @author Kira.Sun <Kira.Sun@163.com>
      * 获得当年的第一天。
+     *
+     * @param yyyy 年份
+     * @return Date数组。第一位是当年的第一天和第二位是当年的最后一天。
      */
     public static Date[] getFirstAndLastDays(String yyyy) {
         Date date = getDateFromPattern("yyyy-MM-dd", yyyy + "-01-01");
@@ -111,11 +116,11 @@ public class DateUtils {
     }
 
     /**
+     * 通过格式化字符串得到时间
+     *
      * @param parrern 格式化字符串 例如：yyyy-MM-dd
      * @param str     时间字符串 例如：2007-08-01
      * @return 出错返回null
-     * @author Kira.Sun <Kira.Sun@163.com>
-     * 通过格式化字符串得到时间
      */
     public static Date getDateFromPattern(String parrern, String str) {
         if (str == null || ("").equals(str))
@@ -131,10 +136,10 @@ public class DateUtils {
     }
 
     /**
+     * 将字符串转化为JAVA时间类型。
+     *
      * @param dateStr。字符串。
      * @return Date date。JAVA时间类型。
-     * @author Kira.Sun <Kira.Sun@163.com>
-     * 将字符串转化为JAVA时间类型。
      */
     public static Date formatString(String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -146,10 +151,10 @@ public class DateUtils {
     }
 
     /**
+     * 将字符串转化为JAVA时间类型(精确到秒)。
+     *
      * @param dateStr。字符串。
      * @return Date date。JAVA时间类型。
-     * @author Kira.Sun <Kira.Sun@163.com>
-     * 将字符串转化为JAVA时间类型(精确到秒)。
      */
     public static Date formatFullString(String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -161,10 +166,10 @@ public class DateUtils {
     }
 
     /**
+     * 将Date时间转为字符串。
+     *
      * @param date。需要格式化的时间。
      * @return String。传入时间的格式化字符串。
-     * @author Kira.Sun <Kira.Sun@163.com>
-     * 将时间转为字符串。
      */
     public static String formatDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -177,11 +182,11 @@ public class DateUtils {
     }
 
     /**
-     * @param dt
+     * 得到传入日期n天后的日期,如果传入日期为null，则表示当前日期n天后的日期
+     *
+     * @param dt   指定日期
      * @param days 可以为任何整数，负数表示前days天，正数表示后days天
      * @return Date
-     * @author Kira.Sun <Kira.Sun@163.com>
-     * 得到传入日期n天后的日期,如果传入日期为null，则表示当前日期n天后的日期
      */
     public static Date getAddDayDate(Date dt, int days) {
         if (dt == null)
@@ -197,7 +202,7 @@ public class DateUtils {
     }
 
     /**
-     * @param dt
+     * @param dt   日期Date对象
      * @param days 可以为任何整数，负数表示前days天，正数表示后days天
      * @return Date
      * @author chensj
@@ -213,9 +218,9 @@ public class DateUtils {
     }
 
     /**
-     * @param d2
+     * @param d1 date-one
+     * @param d2 date-two
      * @return second
-     * @author Kira.Sun <Kira.Sun@163.com>
      * 根据传入的两个时间求时间间隔
      */
     public static int getDayBetween(Date d1, Date d2) {
@@ -237,10 +242,11 @@ public class DateUtils {
     }
 
     /**
-     * @param d2
+     * 根据传入的两个时间求时间间隔(秒)
+     *
+     * @param d1 日期Date对象
+     * @param d2 日期Date对象
      * @return second
-     * @author Kira.Sun <Kira.Sun@163.com>
-     * 根据传入的两个时间求时间间隔
      */
     public static int getSecondsBetween(Date d1, Date d2) {
         // return (int)(d1.getTime()-d2.getTime())/(1000*60*60*24);
@@ -254,13 +260,15 @@ public class DateUtils {
         }
         long m = cal[0].getTime().getTime();
         long n = cal[1].getTime().getTime();
-        return (int) ((long) (m - n) / (1000 * 60 * 60 * 24));
+        return (int) ((m - n) / (1000 * 60 * 60 * 24));
     }
 
     /**
-     * @param d2
+     * 根据传入的两个时间求时间间隔(分)
+     *
+     * @param d1 日期Date对象
+     * @param d2 日期Date对象
      * @return second
-     * 根据传入的两个时间求时间间隔
      */
     public static int[] getDayMinuteBetween(Date d1, Date d2) {
         Date[] d = new Date[2];
@@ -274,18 +282,20 @@ public class DateUtils {
         long m = cal[0].getTime().getTime();
         long n = cal[1].getTime().getTime();
         int between[] = new int[4];
-        between[0] = (int) ((long) (m - n) / (1000 * 24 * 60 * 60));
-        between[1] = (int) ((long) (m - n) % (1000 * 24 * 60 * 60)) / (1000 * 60 * 60);
-        between[2] = (int) ((long) (m - n) % (1000 * 60 * 60)) / (1000 * 60);
-        between[3] = (int) ((long) (m - n) % (1000 * 60)) / (1000);
+        between[0] = (int) ((m - n) / (1000 * 24 * 60 * 60));
+        between[1] = (int) ((m - n) % (1000 * 24 * 60 * 60)) / (1000 * 60 * 60);
+        between[2] = (int) ((m - n) % (1000 * 60 * 60)) / (1000 * 60);
+        between[3] = (int) ((m - n) % (1000 * 60)) / (1000);
         return between;
     }
 
     /**
-     * @param d1,d2
+     * 根据传入的两个时间求时间间隔
+     *
+     * @param d1 日期Date
+     * @param d2 日期Date
      * @return 返回时间间隔，如*秒钟，*分钟，*小时，*天
      * @author ChenKuan
-     * 根据传入的两个时间求时间间隔
      */
     public static String getTimeBetween(Date d1, Date d2) {
         Date[] d = new Date[2];
@@ -299,22 +309,22 @@ public class DateUtils {
         long m = cal[0].getTime().getTime();
         long n = cal[1].getTime().getTime();
         // 取间隔天数
-        int daytime = (int) ((long) (m - n) / (1000 * 60 * 60 * 24));
+        int daytime = (int) ((m - n) / (1000 * 60 * 60 * 24));
         if (Math.abs(daytime) > 0) {
             return Math.abs(daytime) + "天";
         }
         // 取间隔小时数
-        int hourtime = (int) ((long) (m - n) / (1000 * 60 * 60));
+        int hourtime = (int) ((m - n) / (1000 * 60 * 60));
         if (Math.abs(hourtime) > 0) {
             return Math.abs(hourtime) + "小时";
         }
         // 取间隔分钟数
-        int secondtime = (int) ((long) (m - n) / (1000 * 60));
+        int secondtime = (int) ((m - n) / (1000 * 60));
         if (Math.abs(secondtime) > 0) {
             return Math.abs(secondtime) + "分钟";
         }
         // 取间隔秒钟数
-        int minuteime = (int) ((long) (m - n) / (1000));
+        int minuteime = (int) ((m - n) / (1000));
         if (Math.abs(minuteime) >= 0) {
             return Math.abs(minuteime) + "秒钟";
         }
@@ -432,22 +442,19 @@ public class DateUtils {
     //
     public static Date getLastDay() {
         int quot = getQuot(); // 天数差
-        Date lastDate = addDay(quot); // 最后一天
-        return lastDate;
+        return addDay(quot);
     }
 
     public static Date changeDateToUtil(java.sql.Date dt) {
-        Date dtTemp = new Date(dt.getTime());
-        return dtTemp;
+        return new Date(dt.getTime());
     }
 
     public static java.sql.Date changeDateToSql(Date dt) {
-        java.sql.Date dtTemp = new java.sql.Date(dt.getTime());
-        return dtTemp;
+        return new java.sql.Date(dt.getTime());
     }
 
     /**
-     * @param date
+     * @param date 日期
      * @return 月份的第一天
      * 获得本月的最后一天
      */
@@ -479,11 +486,11 @@ public class DateUtils {
     }
 
     /**
-     * @param date 月份所在的时间
+     * @param date   月份所在的时间
+     * @param months 之后几个月
      * @return 当前月之后某月多少天
      * 获得当前月之后某月有多少天
      */
-    @SuppressWarnings("deprecation")
     public static int getDayByMonth(Date date, int months) {
         int tempMonth = date.getMonth() + 1 + months;
         int years = tempMonth / 12;
@@ -539,9 +546,11 @@ public class DateUtils {
     }
 
     /**
-     * @param date
-     * @param Months
-     * @return 获得某月的剩余天数
+     * 获得某月的剩余天数
+     *
+     * @param date   日期Date
+     * @param Months 指定月份
+     * @return 间隔天数
      */
     public static int getLastDayByMonth(Date date, int Months) {
         return getSecondsBetween(getDateByMonth(new Date(), Months), date) / 86400;
@@ -613,10 +622,10 @@ public class DateUtils {
     }
 
     /**
-     * @param date
-     * @return
-     * @author hj
      * 获得本周的最后一天
+     *
+     * @param date 日期Date对象
+     * @return 本周的最后一天日期Date
      */
     @SuppressWarnings("static-access")
     public static Date getLastDateOfWeek(Date date) {
@@ -627,36 +636,12 @@ public class DateUtils {
     }
 
     /**
-     * @param startDate
-     * @param endDate
-     * @return
-     * @throws Exception
-     * @author hj
-     * 获得剩余时间
-     * int[1] 天
-     * int[2] 小时
-     * int[3] 分钟
-     */
-    public static int[] getLastTime(Date endDate, Date startDate) throws Exception {
-        int[] lastTime = new int[3];
-        // 获取当天时间相对截止时间的时间 时间为00:00:00
-        int dayLong = DateUtils.getSecondsBetween(endDate, startDate);
-        // 获取天数
-        Double day = (dayLong) / 86400.0;
-        int hours = (dayLong) % 86400 / 60 / 60;
-        int minute = (dayLong) % 86400 % 3600 / 60;
-        String dayStr = day.toString().substring(0, day.toString().indexOf("."));
-        lastTime[0] = Integer.valueOf(dayStr);
-        lastTime[1] = hours;
-        lastTime[2] = minute;
-        return lastTime;
-    }
-
-    /**
+     * 获取指定日期month月之后的所在日期;
+     * 如3月5号 1月之后所在日期4月3号
+     *
      * @param dt    指定日期
      * @param month 月份数
-     * @return 获取指定日期month月之后的所在日期
-     * 如3月5号 1月之后所在日期4月3号
+     * @return Date
      */
     public static Date getDateByDateAndMonth(Date dt, int month) {
         int day = 0;
@@ -684,22 +669,10 @@ public class DateUtils {
     }
 
     /**
-     * 判断两个date的是否相等，如果日期的的年月日都想等，那么这两个日期就相等
-     *
-     * @return -1:d1!=d2,0:相等
-     */
-    @SuppressWarnings("deprecation")
-    public static int isEqual(Date d1, Date d2) {
-        if ((d1.getYear() == d2.getYear()) && (d1.getMonth() == d2.getMonth()) && (d1.getDate() == d2.getDate())) {
-            return 0;
-        }
-        return -1;
-    }
-
-    /**
-     * @param stype 返回值类型   0为多少天，1为多少个月，2为多少年   date1开始日期date2结束日期
-     * @return
-     * @author QL
+     * @param stype 返回值类型   0为多少天，1为多少个月，2为多少年
+     * @param date1 开始日期
+     * @param date2 结束日期
+     * @return 比较的结果
      */
     public static int compareDate(String date1, String date2, int stype) {
         int n = 0;
@@ -738,7 +711,7 @@ public class DateUtils {
     /**
      * 获取日期是星期几<br>
      *
-     * @param dt
+     * @param dt 目标日期
      * @return 当前日期是星期几
      * @author onping
      * 想返回数字:1为周一2为周二，去掉数组weekDays,直接返回w
@@ -758,15 +731,11 @@ public class DateUtils {
     }
 
     /**
-     *  测试
-     * @param args
-     */
-//    public static void main(String [] args)throws Exception{
-//
-//    }
-
-    /**
      * 两个日期的差距(天数)
+     *
+     * @param startDate 起始日期
+     * @param endDate   结束日期
+     * @return 天数间隔
      */
     public static long getDistDates(Date startDate, Date endDate) {
         long totalDate = 0;
@@ -781,6 +750,10 @@ public class DateUtils {
 
     /**
      * 两个日期的差距(毫秒)
+     *
+     * @param startDate 起始时间
+     * @param endDate   结束时间
+     * @return 相差的毫秒值
      */
     public static long getDistDatesInMillis(Date startDate, Date endDate) {
         long totalDate = 0;
@@ -802,7 +775,8 @@ public class DateUtils {
     /**
      * @param dateU   为当前时间
      * @param minTime 为想减去的时间
-     * @return
+     * @param flag    往前/后计算的标志
+     * @return Date
      * @throws Exception dateU 往前推X小时X分钟 或者往后推
      */
     public static Date getMinDate(Date dateU, String minTime, Long flag) throws Exception {
@@ -829,9 +803,11 @@ public class DateUtils {
     }
 
     /**
-     * @param num
+     * 当天日期加或减num年
+     *
+     * @param num 年数
      * @return Date
-     * @throws Exception 当天日期加或减num年
+     * @throws Exception 转换异常
      */
     public static Date getYear(int num) throws Exception {
         Calendar c = Calendar.getInstance();

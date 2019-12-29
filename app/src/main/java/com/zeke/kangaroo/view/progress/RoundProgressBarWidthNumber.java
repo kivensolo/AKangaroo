@@ -8,7 +8,7 @@ import android.graphics.Paint.Style;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
-import com.github.zeke.kangaroo.R;
+import com.zeke.kangaroo.R;
 
 public class RoundProgressBarWidthNumber extends HorizontalProgressBarWithNumber {
     /**  mRadius of view */

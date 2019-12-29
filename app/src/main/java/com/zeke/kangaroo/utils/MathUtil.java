@@ -66,7 +66,7 @@ public class MathUtil {
      * @param pMiddle The circle center point.
      * @param radius  The circle radius.
      * @param lineK   The slope of line which cross the pMiddle.
-     * @return
+     * @return PointF[]
      */
     public static PointF[] getIntersectionPoints(PointF pMiddle, float radius, Float lineK) {
         PointF[] points = new PointF[2];

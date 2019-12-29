@@ -92,9 +92,9 @@ public class UIUtils {
     /**
      * 通过系统反射方法强制隐藏状态栏
      * 适用系统应该是:
-     * Build.VERSION.SDK_INT <  Build.VERSION_CODES.LOLLIPOP
+     * Build.VERSION.SDK_INT 小于  Build.VERSION_CODES.LOLLIPOP
      * 5.0后的系统,把Context的STATUS_BAR_SERVICE弄成hide的了
-     * @param context
+     * @param context Context
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void hindStatuBarByInvoke(Context context) {

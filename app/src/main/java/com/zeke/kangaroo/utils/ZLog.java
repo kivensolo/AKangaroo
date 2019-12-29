@@ -1,4 +1,5 @@
 package com.zeke.kangaroo.utils;
+
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -9,6 +10,7 @@ import java.util.MissingFormatArgumentException;
 @SuppressWarnings("WeakerAccess")
 public class ZLog {
     private static final String TAG = "Zlog";
+
     private ZLog() {
         throw new Error("Do not need instantiate!");
     }
@@ -25,6 +27,7 @@ public class ZLog {
     public static void i(String msg) {
         logString(LogType.INFO, TAG, msg);
     }
+
     public static void i(String tag, String msg) {
         logString(LogType.INFO, tag, msg);
     }
@@ -32,6 +35,7 @@ public class ZLog {
     public static void d(String msg) {
         logString(LogType.DEBUG, TAG, msg);
     }
+
     public static void d(String tag, String msg) {
         logString(LogType.DEBUG, tag, msg);
     }
@@ -39,6 +43,7 @@ public class ZLog {
     public static void e(String msg) {
         logString(LogType.ERROR, TAG, msg);
     }
+
     public static void e(String tag, String msg) {
         logString(LogType.ERROR, tag, msg);
     }
@@ -47,6 +52,7 @@ public class ZLog {
     public static void v(String msg) {
         logString(LogType.VERBOSE, TAG, msg);
     }
+
     public static void v(String tag, String msg) {
         logString(LogType.VERBOSE, tag, msg);
     }
@@ -54,31 +60,36 @@ public class ZLog {
     public static void w(String msg) {
         logString(LogType.WARN, TAG, msg);
     }
+
     public static void w(String tag, String msg) {
         logString(LogType.WARN, tag, msg);
     }
 
-    public static void i(String tag, String msg,Throwable tr) {
-        if (isDebug) Log.i(tag, msg,tr);
+    public static void i(String tag, String msg, Throwable tr) {
+        if (isDebug) Log.i(tag, msg, tr);
     }
 
     public static void d(String tag, String msg, Throwable tr) {
         if (isDebug) Log.d(tag, msg, tr);
     }
 
-    public static void e(String tag, String msg,Throwable tr) {
-        if (isDebug) Log.e(tag, msg,tr);
+    public static void e(String tag, String msg, Throwable tr) {
+        if (isDebug) Log.e(tag, msg, tr);
     }
 
-    public static void v(String tag, String msg,Throwable tr) {
-        if (isDebug) Log.v(tag, msg,tr);
+    public static void v(String tag, String msg, Throwable tr) {
+        if (isDebug) Log.v(tag, msg, tr);
     }
-    public static void w(String tag, String msg,Throwable tr) {
-        if (isDebug) Log.w(tag, msg,tr);
+
+    public static void w(String tag, String msg, Throwable tr) {
+        if (isDebug) Log.w(tag, msg, tr);
     }
 
     /**
      * 根据当前的参数log等级判断是否需要打印log
+     *
+     * @param type LogType
+     * @return true/false
      */
     public static boolean needPrintLog(LogType type) {
         return isDebug && (type.ordinal() >= _logLevel.ordinal());

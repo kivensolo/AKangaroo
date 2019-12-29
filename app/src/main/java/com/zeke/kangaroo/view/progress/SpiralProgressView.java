@@ -206,7 +206,7 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 设置进度条最大值
-	 * @param maxCount
+	 * @param maxCount 最大值
      */
 	public void setMaxCount(float maxCount) {
 		this.maxCount = maxCount;
@@ -214,8 +214,8 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 自定义设置进度条宽高
-	 * @param mWidth
-	 * @param mHeight
+	 * @param mWidth  宽
+	 * @param mHeight 高
      */
 	public void setWidthAndHeight(int mWidth, int mHeight){
 		this.mWidth  = mWidth;
@@ -224,7 +224,7 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 自定义设置绘图间隔时间
-	 * @param drawSleepTime
+	 * @param drawSleepTime 间隔时间
      */
 	public void setDrawSleepTime(int drawSleepTime) {
 		this.drawSleepTime = drawSleepTime;
@@ -232,7 +232,7 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 设置绘图动画开关
-	 * @param flag
+	 * @param flag true/false
      */
 	public void setAnimation(boolean flag){
 		hasAnimation = flag;
@@ -240,7 +240,7 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 设置螺纹线条开关
-	 * @param flag
+	 * @param flag true/false
      */
 	public void setPiralLine(boolean flag){
 		hasSpiralLine = flag;
@@ -263,8 +263,8 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 自定义绘制时间: Time = maxCount * drawSleepTime
-	 * @param maxCount
-	 * @param drawSleepTime
+	 * @param maxCount 最大数量
+	 * @param drawSleepTime 绘制间隔
      */
 	public void setCustomDrawTime(float maxCount,int drawSleepTime) {
 		this.maxCount = maxCount;
@@ -272,8 +272,8 @@ public class SpiralProgressView extends View{
 	}
 
 	/**
-	 * 设置进度条搜当前值
-	 * @param currentCount
+	 * 设置进度条当前值
+	 * @param currentCount 当前值
      */
 	public void setCurrentCount(float currentCount) {
 		this.currentCount = currentCount > maxCount ? maxCount : currentCount;
@@ -300,7 +300,7 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 是否加载完成
-	 * @return
+	 * @return true/false
      */
 	public boolean isRecordingFinished(){
 		return isRecordingFinished;
@@ -308,7 +308,7 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 是否处于加载中
-	 * @return
+	 * @return true/false
      */
 	public boolean isLoading(){
 		return isRecording;
@@ -342,6 +342,7 @@ public class SpiralProgressView extends View{
 
 	/**
 	 * 绘制进度条
+	 * @param flag true/false 是否有动画
 	 */
 	public void beginDrawWithAnimation(boolean flag){
 		hasAnimation = flag;
@@ -353,22 +354,11 @@ public class SpiralProgressView extends View{
 		}
 	}
 
-	  /**
-     * dp 2 px
-     *
-     * @param dpVal
-     */
     protected int dp2px(int dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 dpVal, getResources().getDisplayMetrics());
     }
 
-    /**
-     * sp 2 px
-     *
-     * @param spVal
-     * @return
-     */
     protected int sp2px(int spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 spVal, getResources().getDisplayMetrics());

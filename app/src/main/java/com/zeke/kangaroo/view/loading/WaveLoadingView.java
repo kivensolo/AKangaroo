@@ -12,7 +12,7 @@ import android.graphics.PorterDuffXfermode;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.github.zeke.kangaroo.R;
+import com.zeke.kangaroo.R;
 
 /**
  * author: King.Z

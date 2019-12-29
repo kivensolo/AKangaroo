@@ -11,7 +11,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.github.zeke.kangaroo.R;
+import com.zeke.kangaroo.R;
 
 
 /**

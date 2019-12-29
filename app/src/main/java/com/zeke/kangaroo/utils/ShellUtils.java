@@ -28,6 +28,7 @@ public class ShellUtils {
 
     /**
      * check whether has root permission
+     * @return true/false
      */
     public static boolean checkRootPermission() {
         return execCommand("echo root", true, false).result == 0;
@@ -38,7 +39,7 @@ public class ShellUtils {
      *
      * @param command command
      * @param isRoot  whether need to run with root
-     * @return
+     * @return CommandResult
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(String command, boolean isRoot) {
@@ -50,7 +51,7 @@ public class ShellUtils {
      *
      * @param commands command list
      * @param isRoot   whether need to run with root
-     * @return
+     * @return CommandResult
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(List<String> commands,
@@ -66,7 +67,7 @@ public class ShellUtils {
      * @param command         command
      * @param isRoot          whether need to run with root
      * @param isNeedResultMsg whether need result msg
-     * @return
+     * @return CommandResult
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(String command, boolean isRoot,
@@ -80,7 +81,7 @@ public class ShellUtils {
      * @param commands        command list
      * @param isRoot          whether need to run with root
      * @param isNeedResultMsg whether need result msg
-     * @return
+     * @return CommandResult
      * @see ShellUtils#execCommand(String[], boolean, boolean)
      */
     public static CommandResult execCommand(List<String> commands,

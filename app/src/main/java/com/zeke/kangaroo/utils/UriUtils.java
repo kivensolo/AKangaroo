@@ -14,11 +14,10 @@ public class UriUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
     /**
-     * 检查url地址是否是有效的
+     * 检查URI地址是否是有效的
      *
      * @return true 有效
-     * @throws URISyntaxException URI语法异常
-     * @param uri
+     * @param uri 要校验的URI
      */
     public static boolean isValid(URI uri){
         return !(uri.getHost() == null || uri.getPath() == null);

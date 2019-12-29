@@ -15,6 +15,7 @@ public class SDCardUtils {
 
     /**
      * 判断SDCard是否已挂在
+     * @return true/false
      */
     public static boolean isSDCardAvailable() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
@@ -26,16 +27,18 @@ public class SDCardUtils {
 
     /**
      * 获取SD卡路径
-     * @return
+     * @param context context
+     *                @param dir dir
+     * @return 路径字符串
      */
-    public static String getDir(Context context, String testRootDir) {
+    public static String getDir(Context context, String dir) {
         String dirPath;
         if(isSDCardAvailable()){
             dirPath =  Environment.getExternalStorageDirectory().getAbsolutePath();
         }else{
             dirPath = context.getCacheDir().getPath();
         }
-        File rootDir = new File(dirPath, testRootDir);
+        File rootDir = new File(dirPath, dir);
         if (!rootDir.exists()) {
             rootDir.mkdirs();
         }
@@ -59,7 +62,7 @@ public class SDCardUtils {
 
     /**
      * 获取指定路径所在空间的剩余可用容量字节数，单位byte
-     * @param filePath
+     * @param filePath 文件路径
      * @return 容量字节 SDCard可用空间，内部存储可用空间
      */
     public static long getFreeBytes(String filePath) {
@@ -75,6 +78,7 @@ public class SDCardUtils {
 
     /**
      * 获取系统存储路径
+     * @return 路径
      */
     public static String getRootDirectoryPath() {
         return Environment.getRootDirectory().getAbsolutePath();

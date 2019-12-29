@@ -28,8 +28,8 @@ public class ScreenShotUtils {
      * public Bitmap getDrawingCache()
      * public void setDrawingCacheEnabled(boolean enabled)
      *
-     * @param view
-     * @return
+     * @param view View
+     * @return Bitmap
      */
     public static Bitmap screenShot(View view) {
         if (null == view) {
@@ -44,8 +44,8 @@ public class ScreenShotUtils {
 
     /**
      * Activity转Bitmap不带状态栏
-     * @param activity
-     * @return
+     * @param activity Activity
+     * @return Bitmap
      */
     public final Bitmap screenShot(Activity activity) {
         if (null == activity) {
@@ -75,7 +75,7 @@ public class ScreenShotUtils {
     /**
      *  ScrollView转长Bitmap(类似锤子便签的截长图)
      * @param scrollView  所需截图的ScrollView
-     * @return
+     * @return Bitmap
      */
     public final Bitmap screenShot(ScrollView scrollView) {
        if (null == scrollView) {

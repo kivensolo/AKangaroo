@@ -11,8 +11,6 @@ import java.util.List;
 
 /**
  * Json Utils
- *
- * @author <a href="http://www.trinea.cn" target="_blank">Trinea</a> 2012-5-12
  */
 public final class JsonUtils {
 
@@ -25,9 +23,9 @@ public final class JsonUtils {
     /**
      * get Long from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject   JSONObject字符串数据
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -53,9 +51,9 @@ public final class JsonUtils {
     /**
      * get Long from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData     json字符串数据
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
@@ -78,24 +76,10 @@ public final class JsonUtils {
         }
     }
 
-    /**
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
-     * @return
-     * @see JsonUtils#getLong(JSONObject, String, Long)
-     */
     public static long getLong(JSONObject jsonObject, String key, long defaultValue) {
         return getLong(jsonObject, key, (Long) defaultValue);
     }
 
-    /**
-     * @param jsonData
-     * @param key
-     * @param defaultValue
-     * @return
-     * @see JsonUtils#getLong(String, String, Long)
-     */
     public static long getLong(String jsonData, String key, long defaultValue) {
         return getLong(jsonData, key, (Long) defaultValue);
     }
@@ -103,9 +87,9 @@ public final class JsonUtils {
     /**
      * get Int from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject   JSONObject字符串数据
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -131,9 +115,9 @@ public final class JsonUtils {
     /**
      * get Int from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData     json字符串数据
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
@@ -156,24 +140,10 @@ public final class JsonUtils {
         }
     }
 
-    /**
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
-     * @return
-     * @see JsonUtils#getInt(JSONObject, String, Integer)
-     */
     public static int getInt(JSONObject jsonObject, String key, int defaultValue) {
         return getInt(jsonObject, key, (Integer) defaultValue);
     }
 
-    /**
-     * @param jsonData
-     * @param key
-     * @param defaultValue
-     * @return
-     * @see JsonUtils#getInt(String, String, Integer)
-     */
     public static int getInt(String jsonData, String key, int defaultValue) {
         return getInt(jsonData, key, (Integer) defaultValue);
     }
@@ -181,9 +151,9 @@ public final class JsonUtils {
     /**
      * get Double from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject   JSONObject字符串数据
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -209,9 +179,9 @@ public final class JsonUtils {
     /**
      * get Double from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData     json字符串数据
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
@@ -234,24 +204,10 @@ public final class JsonUtils {
         }
     }
 
-    /**
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
-     * @return
-     * @see JsonUtils#getDouble(JSONObject, String, Double)
-     */
     public static double getDouble(JSONObject jsonObject, String key, double defaultValue) {
         return getDouble(jsonObject, key, (Double) defaultValue);
     }
 
-    /**
-     * @param jsonData
-     * @param key
-     * @param defaultValue
-     * @return
-     * @see JsonUtils#getDouble(String, String, Double)
-     */
     public static double getDouble(String jsonData, String key, double defaultValue) {
         return getDouble(jsonData, key, (Double) defaultValue);
     }
@@ -259,9 +215,9 @@ public final class JsonUtils {
     /**
      * get String from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject   JsonObject对象
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -287,9 +243,9 @@ public final class JsonUtils {
     /**
      * get String from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData     json字符串数据
+     * @param key          key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
@@ -315,9 +271,9 @@ public final class JsonUtils {
     /**
      * get String from jsonData
      *
-     * @param jsonData
-     * @param defaultValue
-     * @param keyArray
+     * @param jsonData     json字符串数据
+     * @param defaultValue 默认值
+     * @param keyArray     keyArray
      * @return <ul>
      * <li>if jsonData is null, return defaultValue</li>
      * <li>if keyArray is null or empty, return defaultValue</li>
@@ -343,9 +299,9 @@ public final class JsonUtils {
     /**
      * get String array from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject JSONObject字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -380,13 +336,13 @@ public final class JsonUtils {
     /**
      * get String array from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData json字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
-     * <li>return {@link JsonUtils#getStringArray(JSONObject, String, JSONObject)}</li>
+     * <li>return {@link JsonUtils#getStringArray(JSONObject, String, String[])}</li>
      * </ul>
      */
     public static String[] getStringArray(String jsonData, String key, String[] defaultValue) {
@@ -408,9 +364,9 @@ public final class JsonUtils {
     /**
      * get String list from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject JSONObject字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -445,9 +401,9 @@ public final class JsonUtils {
     /**
      * get String list from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData json字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
@@ -473,9 +429,9 @@ public final class JsonUtils {
     /**
      * get JSONObject from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject JSONObject字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -501,9 +457,9 @@ public final class JsonUtils {
     /**
      * get JSONObject from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData json字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonData is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
@@ -529,9 +485,9 @@ public final class JsonUtils {
     /**
      * get JSONArray from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject JSONObject字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -557,13 +513,13 @@ public final class JsonUtils {
     /**
      * get JSONArray from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData json字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>
-     * <li>return {@link JsonUtils#getJSONArray(JSONObject, String, JSONObject)}</li>
+     * <li>return {@link JsonUtils#getJSONArray(JSONObject, String, JSONArray)}</li>
      * </ul>
      */
     public static JSONArray getJSONArray(String jsonData, String key, JSONArray defaultValue) {
@@ -585,9 +541,9 @@ public final class JsonUtils {
     /**
      * get Boolean from jsonObject
      *
-     * @param jsonObject
-     * @param key
-     * @param defaultValue
+     * @param jsonObject JSONObject字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if key is null or empty, return defaultValue</li>
@@ -612,9 +568,9 @@ public final class JsonUtils {
     /**
      * get Boolean from jsonData
      *
-     * @param jsonData
-     * @param key
-     * @param defaultValue
+     * @param jsonData json字符串数据
+     * @param key   key
+     * @param defaultValue 默认值
      * @return <ul>
      * <li>if jsonObject is null, return defaultValue</li>
      * <li>if jsonData {@link JSONObject#JSONObject(String)} exception, return defaultValue</li>

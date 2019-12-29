@@ -114,6 +114,7 @@ public class FileUtils {
      * 删除指定目录文件夹下面的文件，如果文件超过指定时间未修改
      * @param path  目录路径
      * @param limitTime 限制时间
+     * @return 是否删除成功
      */
     public static boolean dealPathFilesWithOldDate(String path,long limitTime){
         if(TextUtils.isEmpty(path)){
@@ -135,9 +136,9 @@ public class FileUtils {
 
     /**
      * 删除指定文件夹下的全部文件，如果文件超过某个数量
-     * @param path
-     * @param count
-     * @return
+     * @param path 文件夹路径
+     * @param count 文件总数上限
+     * @return 是否删除成功
      */
     public static boolean dealPathFilesOverCount(String path,long count){
         if(TextUtils.isEmpty(path)){
@@ -182,10 +183,6 @@ public class FileUtils {
         }
     }
 
-
-    /**
-     * 储存Object至指定目录
-     */
     public static void saveObjectWithPath(Object obj, File filePath) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filePath));
@@ -200,9 +197,6 @@ public class FileUtils {
         }
     }
 
-    /**
-     * 读取指定目录的Object
-     */
     public static Object readObjectWithPath(File filePath) {
         try {
             ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filePath));

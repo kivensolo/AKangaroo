@@ -54,9 +54,6 @@ public class AppInfoUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    /**
-     * 获得全部应用
-     */
     public static List getThirdAppsWithLauncher(Context context) {
         PackageManager pkgMgr = context.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -65,9 +62,6 @@ public class AppInfoUtils {
         return resolveInfoList;
     }
 
-    /**
-     * 是否是顶层应用
-     */
     public static boolean isHomeApp(Context pcontext) {
         PackageManager packageManager = pcontext.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -85,8 +79,9 @@ public class AppInfoUtils {
     /**
      * [根据包名判断一个应用是否已经被安装]
      *
+     * @param context 上下文
      * @param packageName 应用包名
-     * @return
+     * @return true/false
      */
     public static boolean isAppInstalled(Context context,String packageName) {
         PackageManager pm = context.getPackageManager();
@@ -127,9 +122,6 @@ public class AppInfoUtils {
         context.startActivity(intent);
     }
 
-    /**
-     * [获取应用程序名称]
-     */
     public static String getAppName(Context context,String packname){
         PackageInfo packageInfo = getPackageInfoByName(context,packname,0);
         if(packageInfo != null){
@@ -161,12 +153,6 @@ public class AppInfoUtils {
         return null;
     }
 
-    /**
-     * [获取应用程序版本名称信息]
-     *
-     * @param context
-     * @return 当前应用的版本名称
-     */
     public static String getVersionName(Context context, String packageName) {
         try {
             String name = packageName;
@@ -185,7 +171,9 @@ public class AppInfoUtils {
 
     /**
      * [获取应用程序版本号]
-     * @param context
+     *
+     * @param context context
+     * @param packageName 包名
      * @return 当前应用的版本号
      */
     public static int getVersionCode(Context context, String packageName) {
@@ -200,6 +188,7 @@ public class AppInfoUtils {
     /**
      * 当前activity是否处于顶层
      *
+     * @param context context
      * @return true/false
      */
     public static boolean isTopActivity(Context context) {
@@ -231,8 +220,12 @@ public class AppInfoUtils {
 
     }
 
-     /**
+    /**
      * 获取程序的签名
+     *
+     * @param context  context
+     * @param packname 包名
+     * @return 签名信息
      */
     public static String getAppSignature(Context context, String packname) {
         PackageInfo packinfo = getPackageInfoByName(context, packname, PackageManager.GET_SIGNATURES);
@@ -247,6 +240,7 @@ public class AppInfoUtils {
      * 获取指定apk的PackageInfo信息
      * @param context   context
      * @param apk     apk File
+     *                @return 包信息
      */
     public static PackageInfo getAPKInfo(Context context, File apk) {
         if(!apk.exists()) {
@@ -268,7 +262,7 @@ public class AppInfoUtils {
      *                  Flag = GET_SERVICES
      *                  .....
      *                  .....
-     * @return
+     * @return 包信息
      */
     public static PackageInfo getPackageInfoByName(Context context, String packname, int flags) {
         String name = packname;

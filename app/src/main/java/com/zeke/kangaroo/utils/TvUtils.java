@@ -49,9 +49,6 @@ public class TvUtils {
     private TvUtils() {
     }
 
-    /**
-     * Returns the screen/display size.
-     */
     public static Point getDisplaySize(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
@@ -72,6 +69,8 @@ public class TvUtils {
     /**
      * Example for handling resizing content for overscan.  Typically you won't need to resize
      * when using the Leanback support library.
+     * @param activity Activity
+     *                 @param videoView VideoView
      */
     public void overScan(Activity activity, VideoView videoView) {
         DisplayMetrics metrics = new DisplayMetrics();
@@ -87,11 +86,6 @@ public class TvUtils {
         videoView.setLayoutParams(lp);
     }
 
-    /**
-     * 获取播放串时长
-     * @param videoUrl
-     * @return
-     */
     public static long getDuration(String videoUrl) {
         MediaMetadataRetriever mmr = new MediaMetadataRetriever();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {

@@ -30,12 +30,6 @@ public class TimeUtils {
         }
     }
 
-    /**
-     * 时间串转时间戳
-     *
-     * @param timeStr
-     * @return
-     */
     public static long getTime(String timeStr) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmSS");
         Date date = null;
@@ -114,8 +108,8 @@ public class TimeUtils {
     /**
      * 传入yyyy-MM-dd HH:mm:SS返回yyyy/MM/dd
      *
-     * @param dateStr
-     * @return
+     * @param dateStr yyyy-MM-dd HH:mm:SS
+     * @return yyyy/MM/dd
      */
     public static String getYmdByDateStr(String dateStr) {
         if (TextUtils.isEmpty(dateStr)) {
@@ -144,9 +138,6 @@ public class TimeUtils {
         return outputFormat.format(date);
     }
 
-    /**
-     * 获取系统时区
-     */
     public static String getTimeZone() {
         TimeZone tz = TimeZone.getDefault();
 

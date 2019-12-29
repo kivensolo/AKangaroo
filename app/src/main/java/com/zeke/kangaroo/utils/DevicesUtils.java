@@ -39,6 +39,7 @@ public class DevicesUtils {
 
     /**
      * 获得空闲内存X_M
+     *
      * @return 空闲内存X_M
      */
     public static float getFreeMemoryM() {
@@ -74,8 +75,8 @@ public class DevicesUtils {
      * Buffers:            5108 kB  用来给文件做缓冲的大小
      * Cached:            88824 kB  被高速缓冲存储器（cache memory）用的内存的大小
      * SwapCached:        58388 kB  swap 缓存的大小，Android很少使用swap的，经常为0。
-     *                                被高速缓冲存储器（cache memory）用来交换空间的大小,
-     *                                用来在需要的时候很快的被替换而不需要再次打开I/O端口。
+     * 被高速缓冲存储器（cache memory）用来交换空间的大小,
+     * 用来在需要的时候很快的被替换而不需要再次打开I/O端口。
      * Active:           209912 kB  在活跃使用中的缓冲或高速缓冲存储器页面文件的大小，除非非常必要，否则不会被移作他用
      * Inactive:         281388 kB  在不经常使用中的缓冲或高速缓冲存储器页面文件的大小，可能被用于其他途径
      * Active(anon):     177088 kB
@@ -108,6 +109,7 @@ public class DevicesUtils {
      * VmallocTotal:     245760 kB
      * VmallocUsed:       89632 kB
      * VmallocChunk:      74756 kB
+     * @return  设备空闲内存(kB)
      */
     public static long getDeviceFreeMemoryBy_Proc() {
         String freeMemStr;
@@ -130,7 +132,8 @@ public class DevicesUtils {
 
     /**
      * 判断是否为4.0以上版本
-     * @return Api level >= 15
+     *
+     * @return true/false
      */
     public static boolean isVersion4() {
         int sdkVersion;
@@ -144,6 +147,7 @@ public class DevicesUtils {
 
     /**
      * 得到CPU核心数
+     *
      * @return CPU核心数
      */
     public static int getNumCores() {
@@ -161,13 +165,9 @@ public class DevicesUtils {
         }
     }
 
-     /**
-     * whether this process is named with processName
-     *
-     * @param context     上下文
-     * @param processName 进程名
-     * @return
-     * return whether this process is named with processName
+    /**
+     * <ul>
+     * <li>whether this process is named with processName</li>
      * <li>if context is null, return false</li>
      * <li>if {@link ActivityManager#getRunningAppProcesses()} is null, return false</li>
      * <li>if one process of
@@ -175,6 +175,10 @@ public class DevicesUtils {
      * processName, return true,
      * otherwise return false</li>
      * </ul>
+     *
+     * @param context     上下文
+     * @param processName 进程名
+     * @return return whether this process is named with processName.
      */
     public static boolean isNamedProcess(Context context, String processName) {
         if (context == null || TextUtils.isEmpty(processName)) {
@@ -209,7 +213,7 @@ public class DevicesUtils {
         try {
             Class<?> systemProperties = Class.forName("android.os.SystemProperties");
             try {
-                Method get = systemProperties.getMethod("get",String.class, String.class);
+                Method get = systemProperties.getMethod("get", String.class, String.class);
                 if (get == null) {
                     return "WTF?!";
                 }
@@ -259,34 +263,34 @@ public class DevicesUtils {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
-    public static StatFs getSdCardStatFs(){
+    public static StatFs getSdCardStatFs() {
         File directory = Environment.getExternalStorageDirectory();
-        return new  StatFs(directory.getAbsolutePath());
+        return new StatFs(directory.getAbsolutePath());
     }
 
-    public static long getSdCardBlockSize(){
+    public static long getSdCardBlockSize() {
         return getSdCardStatFs().getBlockSizeLong();
     }
 
-    public static long getSdCardBlockCount(){
+    public static long getSdCardBlockCount() {
         return getSdCardStatFs().getBlockCountLong();
     }
 
-    public static long getSdCardAvailableBlocks(){
+    public static long getSdCardAvailableBlocks() {
         return getSdCardStatFs().getAvailableBlocksLong();
     }
 
-    public static String getExtStorageCapacity(Context context){
+    public static String getExtStorageCapacity(Context context) {
         StatFs sf = getSdCardStatFs();
-        long  blockSize = sf.getBlockSizeLong();
-        long  blockCount = sf.getBlockCountLong();
+        long blockSize = sf.getBlockSizeLong();
+        long blockCount = sf.getBlockCountLong();
         return Formatter.formatFileSize(context, blockCount * blockSize);
     }
 
-    public static String getExtStorageAvailCapacity(Context context){
+    public static String getExtStorageAvailCapacity(Context context) {
         StatFs sf = getSdCardStatFs();
-        long  blockSize = sf.getBlockSizeLong();
-        long  availCount = sf.getAvailableBlocks();
+        long blockSize = sf.getBlockSizeLong();
+        long availCount = sf.getAvailableBlocks();
         return Formatter.formatFileSize(context, availCount * blockSize);
     }
 

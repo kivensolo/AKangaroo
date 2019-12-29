@@ -46,9 +46,6 @@ public class NetUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    /**
-     * 网络连接是否可用
-     */
     public static boolean isConnect(Context context) {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -62,6 +59,8 @@ public class NetUtils {
 
     /**
      * 指定的网络连接类型是否可用
+     * @param networkInfo NetworkInfo
+     * @return true/false
      */
     public static boolean isConnect(NetworkInfo networkInfo){
         return networkInfo.isConnected();
@@ -182,9 +181,6 @@ public class NetUtils {
         return mac;
     }
 
-    /**
-     * 指定类型的网络是否可用
-     */
     public static boolean isTypeNetAvailable(Context context,int netType) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(cm == null){
@@ -196,6 +192,7 @@ public class NetUtils {
 
     /**
      * 获取当前网络状态
+     * @param context Context
      * @return 已连接或者正在连接
      */
     public static int getCurrentNetState(Context context) {
@@ -215,7 +212,7 @@ public class NetUtils {
 
     /**
      * 获取当前连接的网络类型
-     * @param context
+     * @param context Context
      * @return one of
      * {@link ConnectivityManager#TYPE_MOBILE},
      * {@link ConnectivityManager#TYPE_WIFI},
@@ -233,6 +230,11 @@ public class NetUtils {
 
     /****************************`***** WIFI Info Start*******************************/
 
+    /**
+     * Wifi是否连接
+     * @param context Context
+     * @return true/false
+     */
     public static boolean isWifiConnect(Context context) {
         NetworkInfo sysNetworkInfo = getSysNetworkInfo(context);
         return sysNetworkInfo != null && sysNetworkInfo.getType() == ConnectivityManager.TYPE_WIFI;
@@ -290,10 +292,9 @@ public class NetUtils {
      * 读取设备的默认网关IP地址
      * @return "000.000.000.000" 格式 如果不存在，返回""
      *
-     * C:\Users\zhi.wang>adb shell ip route
+     * C:\\Users\\zhi.wang: adb shell ip route
      *   default via 10.0.2.2 dev eth0
      *   10.0.2.0/24 dev eth0  proto kernel  scope link  src 10.0.2.15
-     *
      */
     public static String getGatewayIp() {
         String ip = "";
@@ -329,7 +330,7 @@ public class NetUtils {
      * 读取网口工作状态
      * @return true: UP false:DOWN
      *
-     * C:\Users\zhi.wang>adb shell netcfg
+     * C:\\Users\\zhi.wang adb shell netcfg
      *   sit0     DOWN     0.0.0.0/0   0x00000080 00:00:00:00:00:00
      *   eth0     UP     10.0.2.15/24  0x00001043 52:54:00:12:34:56
      *   lo       UP     127.0.0.1/8   0x00000049 00:00:00:00:00:00
@@ -371,7 +372,7 @@ public class NetUtils {
     /**
      * 获取本地Ip地址
      *
-     * @return
+     * @return IP地址
      */
     public static String getLocalIpAddress() {
         String ipaddress = "127.0.0.1";

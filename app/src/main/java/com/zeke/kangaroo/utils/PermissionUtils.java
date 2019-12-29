@@ -24,6 +24,7 @@ public class PermissionUtils {
     /**
      * 获取应用权限
      *
+     * @param ctx Context
      * @return 清单文件中的权限列表
      */
     public static List<String> getPermissions(Context ctx) {
@@ -33,6 +34,7 @@ public class PermissionUtils {
     /**
      * 获取应用权限
      *
+     * @param ctx Context
      * @param packageName 包名
      * @return 清单文件中的权限列表
      */
@@ -51,6 +53,7 @@ public class PermissionUtils {
     /**
      * 设置请求权限
      *
+     * @param ctx Context
      * @param permissions 要请求的权限
      * @return {@link PermissionUtils}
      */

@@ -13,6 +13,7 @@ public class VolumeUtils {
 
     /**
      * 读取当前系统的音量, 0-100
+     * @param context Context
      * @return 当前音量
      */
     public static int getCurrentVolume(Context context) {
@@ -35,7 +36,7 @@ public class VolumeUtils {
 
     /**
      * 获取最大音量
-     * @param context
+     * @param context Context
      * @return 最大音量
      */
     public static int getMaxVolume(Context context) {
@@ -51,6 +52,7 @@ public class VolumeUtils {
 
     /**
      * 设置音量
+     * @param context Context
      * @param percent 0.0 ~ 1.0f 百分比
      * @return 是否设置成功
      */

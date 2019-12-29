@@ -73,8 +73,8 @@ public class SliderDeleteListView extends ListView{
      * 另一种是采用指定theme的方式，在AndroidManifest.xml的application标签里使用：android:theme="@style/customstyle"
      * 这两种方式都需要在res/values/styles.xml里定义customstyle。
      * 详见：http://blog.sina.com.cn/s/blog_67d95f400100z5tr.html
-     * @param context
-     * @param attrs
+     * @param context context
+     * @param attrs attrs
      * @param defStyle 用来指定view的默认style的，如果是0，那么将不会应用任何默认（或者叫缺省）的style。
      *                 也可以是一个属性指定的style引用，也可以直接是一个显式的style资源。
      */
@@ -249,7 +249,7 @@ public class SliderDeleteListView extends ListView{
 
     /**
      * 获取当前点击的位置
-     * @return
+     * @return index
      */
     public int getCurrentPosition(){
         return currentPosition;

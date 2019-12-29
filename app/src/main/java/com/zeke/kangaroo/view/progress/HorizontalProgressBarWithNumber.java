@@ -77,12 +77,6 @@ public class HorizontalProgressBarWithNumber extends ProgressBar {
         mPaint.setColor(mTextColor);
     }
 
-    /**
-     * 因为有的属性，如进度条宽度都让用户自定义了，所以测量也要修改下
-     *
-     * @param widthMeasureSpec
-     * @param heightMeasureSpec
-     */
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec,
                                           int heightMeasureSpec) {
@@ -112,12 +106,6 @@ public class HorizontalProgressBarWithNumber extends ProgressBar {
         return result;
     }
 
-    /**
-     * get the styled attributes
-     * 获取style的属性
-     *
-     * @param attrs
-     */
     private void obtainStyledAttributes(AttributeSet attrs) {
         // init values from custom attributes
         final TypedArray attributes = getContext().obtainStyledAttributes(
@@ -215,22 +203,11 @@ public class HorizontalProgressBarWithNumber extends ProgressBar {
 
     }
 
-    /**
-     * dp 2 px
-     *
-     * @param dpVal
-     */
     protected int dp2px(int dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 dpVal, getResources().getDisplayMetrics());
     }
 
-    /**
-     * sp 2 px
-     *
-     * @param spVal
-     * @return
-     */
     protected int sp2px(int spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 spVal, getResources().getDisplayMetrics());

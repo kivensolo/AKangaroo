@@ -419,6 +419,9 @@ public class HanziToPinyinUtils {
      * characters without space will be put into a Token, One Hanzi character
      * which has pinyin will be treated as a Token.
      * If these is no China collator, the empty token array is returned.
+     *
+     * @param input 输入数据
+     * @return ArrayList of token
      */
     public ArrayList<Token> get(final String input) {
         ArrayList<Token> tokens = new ArrayList<Token>();

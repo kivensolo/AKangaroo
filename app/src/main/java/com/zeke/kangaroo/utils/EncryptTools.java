@@ -184,7 +184,8 @@ public class EncryptTools {
 	}
 
 	/**
-     * Returns the hex string of the given byte array representing a SHA256 hash.
+	 * @param bytes  Given byte array
+     * @return The hex string of the given byte array representing a SHA256 hash.
      */
     public static String sha256BytesToHex(byte[] bytes) {
         return bytesToHex(bytes, SHA_256_CHARS);
@@ -192,6 +193,8 @@ public class EncryptTools {
 
     /**
      * Returns the hex string of the given byte array representing a SHA1 hash.
+	 * @param bytes  byte array
+	 * @return Hex string
      */
     public static String sha1BytesToHex(byte[] bytes) {
         return bytesToHex(bytes, SHA_1_CHARS);

@@ -143,6 +143,7 @@ public class CleanableEditText extends EditText implements OnFocusChangeListener
 
     /**
      * 设置清除图标的显示与隐藏，调用setCompoundDrawables为EditText绘制上去
+     * @param visible 是否可见
      */
     protected void setClearIconVisible(boolean visible) {
         if(mClearDrawable == null) return;

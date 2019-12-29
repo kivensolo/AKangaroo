@@ -88,7 +88,10 @@ public class BitMapUtils {
     /**
      * 旋转图片 ---- 围绕指定轴线
      *
-     * @param bitmap 目标图片
+     * @param rotate_x x轴旋转角度
+     * @param rotate_y y轴旋转角度
+     * @param rotate_z z轴旋转角度
+     * @param bitmap   目标图片
      * @return Bitmap    旋转后的图片
      */
     public static Bitmap setRotateImage_XYZ(float rotate_x, float rotate_y, float rotate_z, Bitmap bitmap) {
@@ -110,6 +113,11 @@ public class BitMapUtils {
     /**
      * 按比例缩放/裁剪图片
      * 通过矩阵方式
+     *
+     * @param bm        原图
+     * @param newHeight 新的高度
+     * @param newWidth  新的宽度
+     * @return 处理后的图片
      */
     public static Bitmap setZoomImg(Bitmap bm, int newWidth, int newHeight) {
         int width = bm.getWidth();
@@ -128,7 +136,7 @@ public class BitMapUtils {
      * @param bm    源BitMap
      * @param skewX x轴倾斜度
      * @param skewY y轴倾斜度
-     * @return
+     * @return 新Bitmap
      */
     public static Bitmap setSkew(Bitmap bm, float skewX, float skewY) {
         int width = bm.getWidth();
@@ -147,12 +155,12 @@ public class BitMapUtils {
      * Matrix m=new Matrix();
      * m.setSkew(0.1f,0.1f,100,100);
      *
-     * @param bm
-     * @param kx
-     * @param ky
-     * @param px
-     * @param py
-     * @return
+     * @param bm 原图
+     * @param kx skew_x
+     * @param ky skew_y
+     * @param px pivot point_x
+     * @param py pivot point_y
+     * @return 新Bitmap
      */
     public static Bitmap setSkew(Bitmap bm, float kx, float ky, float px, float py) {
         int width = bm.getWidth();
@@ -183,7 +191,7 @@ public class BitMapUtils {
      *
      * @param bm     源BitMap
      * @param radius 圆角弧度
-     * @return
+     * @return Bitmap
      */
     public static Bitmap setRoundCorner(Bitmap bm, int radius) {
         //初始化画笔
@@ -209,7 +217,7 @@ public class BitMapUtils {
      * 从圆角、圆形的处理上能看的出来绘制任意多边形都是可以的
      *
      * @param bm 源BitMap
-     * @return
+     * @return Bitmap
      */
     public static Bitmap setBitmapCircle(Bitmap bm) {
         int min = bm.getWidth() < bm.getHeight() ? bm.getWidth() : bm.getHeight();
@@ -235,7 +243,7 @@ public class BitMapUtils {
      *
      * @param bm           原图
      * @param reflectHight 倒影图高度
-     * @return
+     * @return 新Bitmap
      */
     public static Bitmap setInvertedBitmap(Bitmap bm, int reflectHight) {
         int reflectionGap = 4; //倒影图和原图之间的距离
@@ -310,7 +318,7 @@ public class BitMapUtils {
      * @param watermark 水印图片
      * @param mark_x    水印X坐标
      * @param mark_y    水印Y坐标
-     * @return
+     * @return 新Bitmap
      */
     public static Bitmap createWaterMarkBitmap(Bitmap photo, Bitmap watermark, int mark_x, int mark_y) {
         //左上角 mark_x = 0；mark_y=0;
@@ -351,7 +359,7 @@ public class BitMapUtils {
      * @param str    水印文字
      * @param mark_x 水印X坐标
      * @param mark_y 水印Y坐标
-     * @return
+     * @return 新Bitmap
      */
     public static Bitmap createWaterMarkText(Bitmap photo, String str, int mark_x, int mark_y) {
         int width = photo.getWidth();
@@ -429,7 +437,9 @@ public class BitMapUtils {
     /**
      * 更改图片色系，变亮或变暗
      *
+     * @param src   原图
      * @param delta 图片的亮暗程度值，越小图片会越亮，取值范围(0,24)
+     * @return 新Bitmap
      */
     public static Bitmap adjustTone(Bitmap src, int delta) {
         if (delta >= 24 || delta <= 0) {
@@ -522,7 +532,7 @@ public class BitMapUtils {
      *
      * @param context    Application context
      * @param sentBitmap Bitmap to be converted
-     * @param radius     Desired Radius, 0 < r < 25
+     * @param radius     Desired Radius, (0,25)
      * @return a copy of the image with a blur
      */
     public static Bitmap doBlur(Context context, Bitmap sentBitmap, int radius) {
@@ -789,7 +799,6 @@ public class BitMapUtils {
     /**------------------------------------ 图形色彩变换 End -----------------------------------*/
 
 
-
     /************************************* BitMap 获取 Start*************************************/
 
     /**
@@ -879,6 +888,7 @@ public class BitMapUtils {
      *
      * @param context    当前上下文
      * @param bitmapPath bitmap路径
+     * @return 新Bitmap
      */
     public static Bitmap loadBitmapFromAssets(Context context, String bitmapPath) {
         Bitmap image = null;
@@ -919,9 +929,6 @@ public class BitMapUtils {
         return bitmap;
     }
 
-    /**
-     * Bitmap 转 Drawable
-     */
     @SuppressWarnings("deprecation")
     public static Drawable bitmap2Drawable(Bitmap bm) {
         if (bm == null) {
@@ -936,8 +943,8 @@ public class BitMapUtils {
      * 把bitmap转换成base64
      *
      * @param bitmap        目标BitMap
-     * @param bitmapQuality
-     * @return
+     * @param bitmapQuality 图片质量
+     * @return 图片的Base64
      */
     public static String getBase64FromBitmap(Bitmap bitmap, int bitmapQuality) {
         ByteArrayOutputStream bStream = new ByteArrayOutputStream();
@@ -948,6 +955,9 @@ public class BitMapUtils {
 
     /**
      * 把base64转换成bitmap
+     *
+     * @param string Base64编码字符串
+     * @return Bitmap
      */
     public static Bitmap getBitmapFromBase64(String string) {
         byte[] bitmapArray = null;
@@ -959,9 +969,6 @@ public class BitMapUtils {
         return BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.length);
     }
 
-    /**
-     * Bitmap 转 byte[]
-     */
     public static byte[] bitmap2Bytes(Bitmap bm) {
         if (bm == null) {
             return null;
@@ -971,9 +978,6 @@ public class BitMapUtils {
         return baos.toByteArray();
     }
 
-    /**
-     * byte[] 转 Bitmap
-     */
     public static Bitmap bytes2Bitmap(byte[] b) {
         if (b == null || b.length == 0) {
             return null;
@@ -1009,6 +1013,9 @@ public class BitMapUtils {
 
     /**
      * Returns the in memory size of the given {@link Bitmap} in bytes.
+     *
+     * @param bitmap Bitmap
+     * @return 图片字节大小
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static int getBitmapByteSize(Bitmap bitmap) {
@@ -1033,10 +1040,10 @@ public class BitMapUtils {
     /**
      * 根据指定编码格式获取Bitmap大小
      *
-     * @param width
-     * @param height
-     * @param config
-     * @return
+     * @param width  宽
+     * @param height 高
+     * @param config Bitmap.Config
+     * @return 字节大小
      */
     public static int getBitmapByteSize(int width, int height, Bitmap.Config config) {
         return width * height * getBytesPerPixel(config);
@@ -1124,8 +1131,8 @@ public class BitMapUtils {
      * 手动设置缩放系数
      * TestCode
      *
-     * @param inputStream
-     * @return
+     * @param inputStream 图片输入流
+     * @return Bitmap
      */
     public static Bitmap decodeStreamCustomOpts(InputStream inputStream) {
         TypedValue value = new TypedValue();
@@ -1162,7 +1169,7 @@ public class BitMapUtils {
         return bmp.getWidth() * bmp.getHeight();
     }
 
-    public static Bitmap setShadow(Bitmap bitmap, int radius,int color) {
+    public static Bitmap setShadow(Bitmap bitmap, int radius, int color) {
         BlurMaskFilter blurFilter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.OUTER);
         Paint shadowPaint = new Paint();
         shadowPaint.setAlpha(50);
@@ -1177,15 +1184,15 @@ public class BitMapUtils {
     }
 
     /**
-     * @param srcBitmap 原图
-     * @param canvas    画布
-     * @param paintShadow   阴影画笔
-     * @param radius        阴影模糊半径
-     * @param shadowColor   阴影颜色
-     * @param offsetX   x轴大小
-     * @param offsetY   y轴大小
+     * @param srcBitmap   原图
+     * @param canvas      画布
+     * @param paintShadow 阴影画笔
+     * @param radius      阴影模糊半径
+     * @param shadowColor 阴影颜色
+     * @param offsetX     x轴大小
+     * @param offsetY     y轴大小
      */
-    public static void setShadow(Bitmap srcBitmap,Canvas canvas,Paint paintShadow,
+    public static void setShadow(Bitmap srcBitmap, Canvas canvas, Paint paintShadow,
                                  int radius, int shadowColor,
                                  int offsetX, int offsetY) {
 
@@ -1202,8 +1209,8 @@ public class BitMapUtils {
     }
 
     /**
-     * @param bitmap    原图
-     * @param context
+     * @param bitmap  原图
+     * @param context Context
      * @param radius  模糊度 max:25.f
      * @return 模糊后的bitmap
      */
@@ -1266,9 +1273,13 @@ public class BitMapUtils {
     }
 
 
-    /**  最多允许不相等的容差数 */
+    /**
+     * 最多允许不相等的容差数
+     */
     private static final int MAX_NON_MATCH_COUNTS = 16;
-    /**  卷积矩阵大小 */
+    /**
+     * 卷积矩阵大小
+     */
     private static final int CONVOLUTION_FACTOR = 5;
 
     private static final int BYTE_COUNT_PER_PIXEL = 4;
@@ -1283,8 +1294,13 @@ public class BitMapUtils {
 
     /**
      * 通过比较RGB通道值比较两张bitmap是否相同
+     *
+     * @param actualBitmap   实际图
+     * @param expectedBitmap 期望图
+     * @return BitmapCompareResult
      */
-    public static BitmapCompareResult compareBitmap(Bitmap expectedBitmap, Bitmap actualBitmap) {
+    public static BitmapCompareResult compareBitmap(Bitmap expectedBitmap,
+                                                    Bitmap actualBitmap) {
         boolean isEquals = true;
         Bitmap comparedBitmap = null;
 

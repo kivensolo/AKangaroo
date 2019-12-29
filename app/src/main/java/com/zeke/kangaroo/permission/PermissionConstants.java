@@ -22,7 +22,6 @@ public final class PermissionConstants {
     @Retention(SOURCE)
     @Target({ANNOTATION_TYPE})
     public @interface StringDef {
-        /** Defines the allowed constants for this element */
         String[] value() default {};
     }
 
