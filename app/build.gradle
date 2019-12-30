@@ -37,6 +37,40 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
 }
 
+//[baseName]-[appendix]-[version]-[classifier].[extension]
+task makeJar(type: Jar){
+    baseName = "Akangaroo"
+    appendix = "demo"
+    version = "1.0.0"
+    classifier = "release"
+    extension = "jar"
+    from('build/intermediates/classes/debug')
+    exclude('**/R.class')
+    //去掉R$开头的文件
+    exclude('**/R\$*.class')
+}
+
+task clearJar(type: Delete) {
+    // 删除libs目录数据
+    //delete 'build/libs/'
+    // 有选择性的删除
+    FileTree tree = fileTree("build/libs/")
+    tree.visit {
+        element ->
+            if (element.getName().endsWith(".jar") &&
+                    !element.getName().contains("javadoc") &&
+                    !element.getName().contains("sources")) {
+                println "$element.file.name" + " " + element.getName()
+                delete element.file
+            }
+    }
+}
+
+def jarGroup = "jars"
+makeJar.setGroup(jarGroup)
+clearJar.setGroup(jarGroup)
+makeJar.dependsOn(clearJar, build)
+
 task sourcesJar(type: Jar) {
     appendix = 'kangaroo'
     version = "1.0.0"
@@ -54,11 +88,15 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
+sourcesJar.setGroup(jarGroup)
+javadocJar.setGroup(jarGroup)
 
 artifacts {
     archives sourcesJar
     archives javadocJar
 }
+
+
 
 
 
