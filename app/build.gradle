@@ -34,6 +34,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
 }
 
@@ -42,10 +43,10 @@ task makeJar(type: Jar){
     baseName = "Akangaroo"
     appendix = "demo"
     version = "1.0.0"
-    classifier = "release"
+    classifier = "debug"
     extension = "jar"
     from('build/intermediates/classes/debug')
-    exclude('**/R.class')
+//    exclude('**/R.class')
     //去掉R$开头的文件
     exclude('**/R\$*.class')
 }
