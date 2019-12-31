@@ -16,6 +16,7 @@ import java.util.List;
  * description：动态权限申请工具类
  * 支持8.0
  */
+@SuppressWarnings("WeakerAccess")
 public class PermissionUtils {
     LinkedHashSet<String> mPermissions;
     private static List<String> PERMISSIONS = null;
