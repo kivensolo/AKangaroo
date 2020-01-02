@@ -51,6 +51,7 @@ public abstract class CommonRecyclerAdapter<T> extends
     /**
      * 根据viewType返回需要填充的布局id
      * @param type 实现类又来区分Layout类型的参数
+     * @return Type Code
      */
     protected abstract int getItemLayout(int type);
 

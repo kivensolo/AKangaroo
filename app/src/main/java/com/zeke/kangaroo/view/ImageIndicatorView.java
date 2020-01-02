@@ -55,6 +55,7 @@ public class ImageIndicatorView extends LinearLayout {
     /**
      * SetTotal Dot Counts.
      * @param dotCounts 总的Dot个数
+     * @return DotsView
      */
     public ImageIndicatorView setDots(int dotCounts) {
         dotCounts = dotCounts > MAX_CAPACITY ? MAX_CAPACITY : dotCounts;
