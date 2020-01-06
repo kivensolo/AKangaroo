@@ -89,6 +89,12 @@ public class UIUtils {
         params.bottomMargin = bottomMargin;
     }
 
+    public static void measureWidthAndHeight(View view) {
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(w, h);
+    }
+
     /**
      * 通过系统反射方法强制隐藏状态栏
      * 适用系统应该是:

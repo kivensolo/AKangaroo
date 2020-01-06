@@ -3,6 +3,7 @@ package com.zeke.kangaroo.view.edittext;
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,21 +11,19 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
-import android.widget.EditText;
 
 /**
  * author：KingZ
  * date：2019/11/4
  * description：带清除功能的EditText
- *  方案1：布局组合封装，即组合EditText和删除按钮，封装成一个整体来使用。
- *  方案2：使用 CompoundDrawable 属性
+ *  使用 CompoundDrawable 属性
  *
  *  设置ClearDrawable:
  *      android:drawableEnd="@mipmap/clear"
  *  取消EditText下划线：
  *      android:background="@null"
  */
-public class CleanableEditText extends EditText implements OnFocusChangeListener {
+public class CleanableEditText extends AppCompatEditText implements OnFocusChangeListener {
     private final String TAG = "ClearableEditText";
     private Drawable mClearDrawable;
     private boolean hasFocus;
