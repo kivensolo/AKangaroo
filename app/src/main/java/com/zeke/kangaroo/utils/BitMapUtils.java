@@ -19,7 +19,6 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -355,18 +354,18 @@ public class BitMapUtils {
     /**
      * 生成水印文字
      *
-     * @param photo  原图片
+     * @param target 目标图片
      * @param str    水印文字
      * @param mark_x 水印X坐标
      * @param mark_y 水印Y坐标
      * @return 新Bitmap
      */
-    public static Bitmap createWaterMarkText(Bitmap photo, String str, int mark_x, int mark_y) {
-        int width = photo.getWidth();
-        int hight = photo.getHeight();
-        //建立一个空的BItMap
+    public static Bitmap createWaterMarkText(Bitmap target, String str,
+                                             int mark_x, int mark_y,
+                                             Paint textPaint) {
+        int width = target.getWidth();
+        int hight = target.getHeight();
         Bitmap icon = Bitmap.createBitmap(width, hight, ARGB_8888);
-        //初始化画布绘制的图像到icon上
         Canvas canvas = new Canvas(icon);
 
         Paint photoPaint = new Paint();     //建立画笔
@@ -374,22 +373,12 @@ public class BitMapUtils {
         photoPaint.setFilterBitmap(true);   //过滤一些
 
         //创建一个指定的新矩形的坐标
-        Rect src = new Rect(0, 0, photo.getWidth(), photo.getHeight());
+        Rect src = new Rect(0, 0, width, hight);
         //创建一个指定的新矩形的坐标
         Rect dst = new Rect(0, 0, width, hight);
         //将photo 缩放或则扩大到 dst使用的填充区photoPaint
-        canvas.drawBitmap(photo, src, dst, photoPaint);
+        canvas.drawBitmap(target, src, dst, photoPaint);
 
-        //设置画笔
-        Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);
-        textPaint.setTextSize(20.0f);//字体大小
-        //采用默认的宽度
-        textPaint.setTypeface(Typeface.DEFAULT_BOLD);
-        //采用的颜色
-        textPaint.setColor(Color.parseColor("#5FCDDA"));
-        //影音的设置
-        //textPaint.setShadowLayer(3f, 1, 1,this.getResources().getColor(android.R.color.background_dark));
-        //绘制上去字，开始未知x,y采用那只笔绘制
         canvas.drawText(str, mark_x, mark_y, textPaint);
         canvas.save(Canvas.ALL_SAVE_FLAG);
         canvas.restore();
