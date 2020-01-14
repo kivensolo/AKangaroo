@@ -83,9 +83,6 @@ public class CleanableEditText extends AppCompatEditText implements OnFocusChang
         this.mClearDrawable = null;
     }
 
-    /**
-     * 添加触摸事件 点击之后 出现 清空editText的效果
-     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP && mClearDrawable != null) {
