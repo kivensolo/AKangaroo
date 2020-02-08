@@ -102,7 +102,7 @@ public abstract class CommonRecyclerAdapter<T> extends
     }
 
     public CommonRecyclerAdapter<T> addAll(T... list){
-        if(list != null && list.length > 0) {
+        if(list != null && list.length >= 0) {
             mData.addAll(Arrays.asList(list));
         }
         return this;
