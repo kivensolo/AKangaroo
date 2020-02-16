@@ -1,6 +1,9 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
+//输出jar/aar包的版本
+def jarVersion = "1.0.1"
+
 publish {
     userOrg = 'kivensolo'
     groupId = 'com.github.zeke'
@@ -43,7 +46,7 @@ dependencies {
 task makeJar(type: Jar){
     baseName = "Akangaroo"
     appendix = "demo"
-    version = "1.0.0"
+    version = jarVersion
     classifier = "debug"
     extension = "jar"
     from('build/intermediates/classes/debug')
@@ -75,13 +78,13 @@ makeJar.dependsOn(clearJar, build)
 
 task sourcesJar(type: Jar) {
     appendix = 'kangaroo'
-    version = "1.0.1"
+    version = jarVersion
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs
 }
 
 task javadoc(type: Javadoc) {
-    version = "1.0.1"
+    version = jarVersion
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
