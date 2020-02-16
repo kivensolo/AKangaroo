@@ -358,6 +358,7 @@ public class BitMapUtils {
      * @param str    水印文字
      * @param mark_x 水印X坐标
      * @param mark_y 水印Y坐标
+     * @param textPaint 画笔
      * @return 新Bitmap
      */
     public static Bitmap createWaterMarkText(Bitmap target, String str,

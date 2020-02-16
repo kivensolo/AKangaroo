@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public abstract class CommonRecyclerAdapter<T> extends
         RecyclerView.Adapter<CommonRecyclerAdapter.ViewHolder> {
-    private List<T> mData;
+    private List<T> mData = new ArrayList<>();
 
     public CommonRecyclerAdapter(List<T> list) {
         if(list == null){
@@ -127,7 +128,7 @@ public abstract class CommonRecyclerAdapter<T> extends
     }
 
     public static final class ViewHolder extends RecyclerView.ViewHolder {
-        private SparseArray<View> holder;
+        private SparseArray<View> holder = new SparseArray<>();
 
         public ViewHolder(View itemView) {
             super(itemView);

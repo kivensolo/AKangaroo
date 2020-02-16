@@ -11,7 +11,7 @@ import android.view.ViewParent;
 
 import java.lang.reflect.Method;
 
-public class UIUtils {
+public final class UIUtils {
     private final static String TAG = "UIUtils";
 
     public static int dip2px(Context context, float dpValue) {
@@ -34,11 +34,11 @@ public class UIUtils {
         return (int) (spValue * fontScale + 0.5f);
     }
 
-    public static int getDisplayWidth(Context context) {
+    public static int getScreenWidth(Context context) {
         return context.getResources().getDisplayMetrics().widthPixels;
     }
 
-    public static int getDisplayHeight(Context context) {
+    public static int getScreenHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
 
