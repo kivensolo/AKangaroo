@@ -34,8 +34,8 @@ import static com.zeke.kangaroo.utils.DevicesUtils.getDeviceUsableMemory;
  *     @see #getThirdAppsWithLauncher(Context)
  *     @see #getAppName(Context,String)
  *     @see #getAppIcon(Context,String)
- *     @see #getVersionName(Context,String)
- *     @see #getVersionCode(Context,String)
+ *     @see #getAppVersionName(Context,String)
+ *     @see #getAppVersion(Context,String)
  *     @see #getIntentContentToStr(Intent)
  *     @see #getAppSignature(Context,String)
  *     @see #getAPKInfo(Context, File)
@@ -153,7 +153,7 @@ public class AppInfoUtils {
         return null;
     }
 
-    public static String getVersionName(Context context, String packageName) {
+    public static String getAppVersionName(Context context, String packageName) {
         try {
             String name = packageName;
             if (TextUtils.isEmpty(name)) {
@@ -170,13 +170,30 @@ public class AppInfoUtils {
     }
 
     /**
-     * [获取应用程序版本号]
+     * [获取当前app版本号]
+     *
+     * @param context 上下文
+     * @return 当前app版本号
+     */
+    public static int getAppVersion(Context context) {
+        PackageManager manager = context.getPackageManager();
+        int code = 0;
+        try {
+            code = manager.getPackageInfo(context.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            ZLog.e(TAG, e.toString());
+        }
+        return code;
+    }
+
+    /**
+     * [获取指定app程序版本号]
      *
      * @param context context
      * @param packageName 包名
-     * @return 当前应用的版本号
+     * @return 当前app的版本号
      */
-    public static int getVersionCode(Context context, String packageName) {
+    public static int getAppVersion(Context context, String packageName) {
         int verCode = -1;
         PackageInfo packageInfo = getPackageInfoByName(context,packageName,0);
         if(packageInfo != null){

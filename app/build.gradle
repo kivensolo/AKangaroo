@@ -2,13 +2,18 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 //输出jar/aar包的版本
-def jarVersion = "1.0.1"
+
+//输出jar/aar包的配置
+//[baseName]-[appendix]-[version]-[classifier].[extension]
+def libVersion = "1.0.1"
+def jarFileBaseName = "kangaroo"
+def jarType = "debug"
 
 publish {
     userOrg = 'kivensolo'
     groupId = 'com.github.zeke'
     artifactId = 'kangaroo'
-    publishVersion = '1.0.1'
+    publishVersion = libVersion
     desc = 'Agile Development Tool Libraries'
     website = 'https://github.com/kivensolo/AKangaroo'
 }
@@ -46,7 +51,7 @@ dependencies {
 task makeJar(type: Jar){
     baseName = "Akangaroo"
     appendix = "demo"
-    version = jarVersion
+    version = libVersion
     classifier = "debug"
     extension = "jar"
     from('build/intermediates/classes/debug')
@@ -77,19 +82,21 @@ clearJar.setGroup(jarGroup)
 makeJar.dependsOn(clearJar, build)
 
 task sourcesJar(type: Jar) {
-    appendix = 'kangaroo'
-    version = jarVersion
+    baseName = jarFileBaseName
+//    appendix = 'kangaroo'
+    version = libVersion
     classifier = 'sources'
     from android.sourceSets.main.java.srcDirs
 }
 
 task javadoc(type: Javadoc) {
-    version = jarVersion
+    version = libVersion
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
+    baseName = jarFileBaseName
     classifier = 'javadoc'
     from javadoc.destinationDir
 }
