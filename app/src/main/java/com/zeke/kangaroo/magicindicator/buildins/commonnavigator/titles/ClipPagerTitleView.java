@@ -17,10 +17,10 @@ import com.zeke.kangaroo.magicindicator.buildins.commonnavigator.abs.IMeasurable
  */
 public class ClipPagerTitleView extends View implements IMeasurablePagerTitleView {
     private String mText;
-    private int mTextColor;
-    private int mClipColor;
+    private int mTextColor;     //普通文本颜色
+    private int mClipColor;     //Clip效果的文本颜色
     private boolean mLeftToRight;
-    private float mClipPercent;
+    private float mClipPercent; //Clip的百分比
 
     private Paint mPaint;
     private Rect mTextBounds = new Rect();
@@ -56,6 +56,8 @@ public class ClipPagerTitleView extends View implements IMeasurablePagerTitleVie
             case MeasureSpec.UNSPECIFIED:
                 result = mTextBounds.width() + getPaddingLeft() + getPaddingRight();
                 break;
+            case MeasureSpec.EXACTLY:
+                break;
             default:
                 break;
         }
@@ -73,6 +75,8 @@ public class ClipPagerTitleView extends View implements IMeasurablePagerTitleVie
                 break;
             case MeasureSpec.UNSPECIFIED:
                 result = mTextBounds.height() + getPaddingTop() + getPaddingBottom();
+                break;
+            case MeasureSpec.EXACTLY:
                 break;
             default:
                 break;

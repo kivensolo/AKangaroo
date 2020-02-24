@@ -25,65 +25,71 @@ import java.util.ArrayList;
  * 并且要循环滑动时是最麻烦的, 此组件为专门为Banner设计的。
  * <p>特性:<br>
  * 循环滑动:
- *      手势/定时自动循环滑动啦，使用BaseAdapter实现内部视图复用，减
- *      少内存消耗滑动卡顿等问题。<br>
- * 可配置属性：自定义滑动动画，手势快速滑动，滑动方向垂直或水平。
+ *      手势/定时自动循环滑动，使用BaseAdapter实现内部视图复用，
+ *      减少内存消耗滑动卡顿等问题。<br>
+ *
+ * 可配置属性：<br>
+ *      自定义滑动动画，手势快速滑动，滑动方向垂直或水平。
  *
  * Item缩进: <br>
- * 缩进中心视图，并且展示左右视图，类似与PC网易云音乐首页Banner的样式。
+ *      缩进中心视图，并且展示左右视图，类似与PC网易云音乐首页Banner的样式。
  */
 public class NBannerView extends ViewGroup {
 
-    private static final int MOVE_SLOP = 10;
-
+    // Banner属性设置
     private static final int MIN_RECYCLE_ITEM_SIZE = 3;
+    private int orientation = LinearLayout.HORIZONTAL;  //Banner布局方向
+    private boolean isAutoLoop = false;                 //是否自动循环展示
+    private long loopInterval = 4000L;                  //自动滑动展示的间隔
+    protected int spaceBetweenItems = 0;                //Item之间的间隔
 
-    private boolean isAutoCycle = false;
+    // 手势滑动效果参数设置
+    private int durationOnPacking = 300;                //惯性停靠动画时间
+    private float inertialRatio = 0.5f;                 //惯性滑动速度比
 
-    private boolean isAutoCycleToNext = true;
+    private boolean isAutoLoopToNext = true;
 
-    private int intervalOnAutoCycle = 4000;
+    private boolean isAttachedToWindow = false;
 
-    private int durationOnAutoScroll = 300;
+    private int durationOnAutoScroll = 300;     //
 
-    private int durationOnInertial = 800;
-
-    private int durationOnPacking = 300;
+    private int durationOnInertial = 800;       //惯性持续时间
 
     private float overRatio = 0.5f;
 
-    private int orientation = LinearLayout.HORIZONTAL;
-
-    private int spaceBetweenItems = 0;
 
     private int leftIndent, topIndent, rightIndent, bottomIndent;
 
-    private boolean isClick2Selected = true;
+    private boolean isClick2Selected = true;        //点击非中心试图的item是否移动到中心
 
     private boolean isAutoCheckRecycleItemSize = true;
 
-    private float inertialRatio = 0.5f;
 
-    private OnItemScrolledListener onItemScrolledListener;
-    private OnItemSelectedListener onItemSelectedListener;
-    private AnimationAdapter animationAdapter;
+    private ItemChangedListener onItemChangedListener;
+    private BaseAnimationAdapter animationAdapter;
     private IIndicator indicator;
 
     private AdapterDataSetObserver dataSetObserver;
     private BaseAdapter adapter;
-    private ArrayList<ItemWrapper> items = null;
+    private ArrayList<ItemWrapper> itemList = null;
 
     private Rect[] itemsBounds = null;
 
+    //手势相关参数  ------- START
+    private static final int MOVE_SLOP = 10;
     private VelocityTracker velocityTracker = null;
 
+
+    /**
+     * 自动循环Runnable
+     */
     private final Runnable autoCycleRunnable = new Runnable() {
         @Override
         public void run() {
             if (isShown() && adapter != null && adapter.getCount() > 0) {
-                moveItems(isAutoCycleToNext ? 1 : -1);
+                moveItems(isAutoLoopToNext ? 1 : -1);
             }
-            postDelayed(this, intervalOnAutoCycle);
+            postDelayed(this, loopInterval);
         }
     };
 
@@ -114,8 +120,6 @@ public class NBannerView extends ViewGroup {
         resumeAutoCycle();
     }
 
-    private boolean isAttachedToWindow = false;
-
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
@@ -136,6 +140,11 @@ public class NBannerView extends ViewGroup {
         return this;
     }
 
+    /**
+     * 设置可复用的视图个数
+     * @param size 个数大小,需为奇数,偶数情况下会自动转换为奇数
+     * @return BannerView对象
+     */
     public final NBannerView setRecycleItemSize(int size) {
         if (size < MIN_RECYCLE_ITEM_SIZE) {
             return this;
@@ -147,23 +156,23 @@ public class NBannerView extends ViewGroup {
             return this;
         }
         final int tmpIndex = getCurrentIndex();
-        if (null != items) {
-            for (ItemWrapper item : items) {
+        if (null != itemList) {
+            for (ItemWrapper item : itemList) {
                 item.recycle();
             }
-            items.clear();
+            itemList.clear();
         } else {
-            items = new ArrayList<>(size);
+            itemList = new ArrayList<>(size);
         }
         for (int i = 0; i < size; i++) {
-            items.add(new ItemWrapper(i));
+            itemList.add(new ItemWrapper(i));
         }
         setCurrentIndex((tmpIndex >= 0 && tmpIndex < adapter.getCount()) ? tmpIndex : 0);
         return this;
     }
 
     public final int getRecycleItemSize() {
-        return null == items ? 0 : items.size();
+        return null == itemList ? 0 : itemList.size();
     }
 
     public NBannerView setAdapter(BaseAdapter cycleAdapter) {
@@ -185,6 +194,11 @@ public class NBannerView extends ViewGroup {
         return adapter;
     }
 
+    /**
+     * 设置手指滑动停止之后视图归位的越界系数
+     * @param ratio 大于20%为滑动到下一个Item
+     * @return NBannerView
+     */
     public NBannerView setOverRatio(float ratio) {
         this.overRatio = Math.max(0, Math.min(1.0f, ratio));
         return this;
@@ -205,12 +219,17 @@ public class NBannerView extends ViewGroup {
         return orientation;
     }
 
-    public NBannerView setDurationOnPacking(int duration) {
+    /**
+     * 设置惯性停靠动画的时长
+     * @param duration 市场参数
+     * @return NBannerView
+     */
+    public NBannerView setParkingDuration(int duration) {
         this.durationOnPacking = Math.max(0, duration);
         return this;
     }
 
-    public int getDurationOnPacking() {
+    public int getPackingDuration() {
         return durationOnPacking;
     }
 
@@ -233,22 +252,22 @@ public class NBannerView extends ViewGroup {
     }
 
     public NBannerView setIntervalOnAutoCycle(int interval) {
-        intervalOnAutoCycle = Math.max(0, interval);
+        loopInterval = Math.max(0, interval);
         return this;
     }
 
-    public int getIntervalOnAutoCycle() {
-        return intervalOnAutoCycle;
+    public long getIntervalOnAutoCycle() {
+        return loopInterval;
     }
 
-    public boolean isAutoCycle() {
-        return isAutoCycle;
+    public boolean isAutoLoop() {
+        return isAutoLoop;
     }
 
-    public NBannerView setAutoCycle(boolean auto, boolean moveToNext) {
-        isAutoCycle = auto;
-        isAutoCycleToNext = moveToNext;
-        if (auto) {
+    public NBannerView setAutoLoop(boolean loop, boolean moveToNext) {
+        isAutoLoop = loop;
+        isAutoLoopToNext = moveToNext;
+        if (loop) {
             if (isAttachedToWindow) {
                 // auto start when already attached to window
                 resumeAutoCycle();
@@ -259,7 +278,15 @@ public class NBannerView extends ViewGroup {
         return this;
     }
 
-    public NBannerView setIndent(int left, int top, int right, int bottom) {
+    /**
+     * 设置中心视图参考与父视图的缩进边距（默认铺满父视图）
+     * @param left      左padding
+     * @param top       上padding
+     * @param right     右padding
+     * @param bottom    下padding
+     * @return NBannerView
+     */
+    public NBannerView setCenterViewPadding(int left, int top, int right, int bottom) {
         leftIndent = left;
         topIndent = top;
         rightIndent = right;
@@ -313,30 +340,26 @@ public class NBannerView extends ViewGroup {
             autoMove(offset, durationOnAutoScroll, new Runnable() {
                 @Override
                 public void run() {
-                    autoPacking();
+                    autoParking();
                 }
             });
         }
         return this;
     }
 
-    public NBannerView setOnItemScrolledListener(OnItemScrolledListener scrolledListener) {
-        this.onItemScrolledListener = scrolledListener;
+
+    public NBannerView setOnItemChangedListener(ItemChangedListener itemChangedListener) {
+        this.onItemChangedListener = itemChangedListener;
         return this;
     }
 
-    public NBannerView setOnItemSelectedListener(OnItemSelectedListener selectedListener) {
-        this.onItemSelectedListener = selectedListener;
-        return this;
-    }
-
-    public NBannerView setAnimationAdapter(AnimationAdapter animationAdapter) {
-        if (null != this.animationAdapter) {
-            this.animationAdapter.circularView = null;
+    public NBannerView setAnimationAdapter(BaseAnimationAdapter adapter) {
+        if (null != animationAdapter) {
+            animationAdapter.bindWithBannerView(null);
         }
-        this.animationAdapter = animationAdapter;
-        if (null != this.animationAdapter) {
-            this.animationAdapter.circularView = this;
+        animationAdapter = adapter;
+        if (null != animationAdapter) {
+            animationAdapter.bindWithBannerView(this);
             requestLayout();
         }
         return this;
@@ -352,8 +375,8 @@ public class NBannerView extends ViewGroup {
         if (null == centerItem) {
             return;
         }
-        if (null != onItemScrolledListener) {
-            onItemScrolledListener.onItemScrolled(this, centerItem.dataIndex, offset);
+        if (null != onItemChangedListener) {
+            onItemChangedListener.onItemScrolled(this, centerItem.dataIndex, offset);
         }
         if (null != animationAdapter) {
             animationAdapter.onScrolled(offset);
@@ -369,8 +392,8 @@ public class NBannerView extends ViewGroup {
         }
         int centerDataIndex = centerItem.dataIndex;
         if (lastCenterItemDataIndex != centerDataIndex) {
-            if (null != onItemSelectedListener) {
-                onItemSelectedListener.onItemSelected(this, centerDataIndex);
+            if (null != onItemChangedListener) {
+                onItemChangedListener.onItemSelected(this, centerDataIndex);
             }
             if (null != indicator) {
                 indicator.setCurrentIndex(centerDataIndex);
@@ -380,9 +403,9 @@ public class NBannerView extends ViewGroup {
     }
 
     private void resumeAutoCycle() {
-        if (isAutoCycle) {
+        if (isAutoLoop) {
             removeCallbacks(autoCycleRunnable);
-            postDelayed(autoCycleRunnable, intervalOnAutoCycle);
+            postDelayed(autoCycleRunnable, loopInterval);
         }
     }
 
@@ -390,17 +413,17 @@ public class NBannerView extends ViewGroup {
         removeCallbacks(autoCycleRunnable);
     }
 
-    private int getItemWidth() {
+    protected int getItemWidth() {
         return itemsBounds.length > 0 ? itemsBounds[0].width() : 0;
     }
 
-    private int getItemHeight() {
+    protected int getItemHeight() {
         return itemsBounds.length > 0 ? itemsBounds[0].height() : 0;
     }
 
     protected final ItemWrapper findItem(int itemIndex) {
         for (int i = 0; i < getRecycleItemSize(); i++) {
-            ItemWrapper item = items.get(i);
+            ItemWrapper item = itemList.get(i);
             if (item.itemIndex == itemIndex) {
                 return item;
             }
@@ -435,7 +458,9 @@ public class NBannerView extends ViewGroup {
         }
         addOnLayoutChangeListener(new OnLayoutChangeListener() {
             @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+            public void onLayoutChange(View v, int left, int top,
+                                       int right, int bottom, int oldLeft,
+                                       int oldTop, int oldRight, int oldBottom) {
                 removeOnLayoutChangeListener(this);
                 post(new Runnable() {
                     @Override
@@ -626,8 +651,7 @@ public class NBannerView extends ViewGroup {
                     autoMove(inertialDis, durationOnInertial, new Runnable() {
                         @Override
                         public void run() {
-                            // 自动滑动（惯性）之后停靠
-                            autoPacking();
+                            autoParking();
                         }
                     });
                 }
@@ -669,7 +693,7 @@ public class NBannerView extends ViewGroup {
                 }
             }
             // cycleItemIndex：使视图展示内容与adapter中的数据下标进行绑定，形成循环
-            for (ItemWrapper tmp : items) {
+            for (ItemWrapper tmp : itemList) {
                 tmp.itemIndex = cycleItemIndex(tmp.itemIndex);
             }
             if (orientation == LinearLayout.VERTICAL) {
@@ -733,7 +757,11 @@ public class NBannerView extends ViewGroup {
         }
     }
 
-    protected final void autoPacking() {
+
+    /**
+     * 自动滑动（惯性）之后停靠
+     */
+    protected final void autoParking() {
         int offset, maxOffset;
         if (orientation == LinearLayout.VERTICAL) {
             offset = getScrollY();
@@ -787,12 +815,15 @@ public class NBannerView extends ViewGroup {
         return itemIndex;
     }
 
+    /**
+     * 内部数据适配器的数据观察类
+     */
     private final class AdapterDataSetObserver extends DataSetObserver {
         @Override
         public void onChanged() {
             final int tmpIndex = getCurrentIndex();
-            if (null != items) {
-                for (ItemWrapper item : items) {
+            if (null != itemList) {
+                for (ItemWrapper item : itemList) {
                     item.recycle();
                 }
             }
@@ -812,7 +843,7 @@ public class NBannerView extends ViewGroup {
         }
     }
 
-    private final class ItemWrapper {
+    final class ItemWrapper {
 
         private static final int NONE = 0x00;
         private static final int USING = 0x01;
@@ -845,7 +876,10 @@ public class NBannerView extends ViewGroup {
         }
 
         void updateView() {
-            if (adapter != null && dataIndex >= 0 && dataIndex < adapter.getCount() && state == NONE) {
+            if (adapter != null
+                    && dataIndex >= 0
+                    && dataIndex < adapter.getCount()
+                    && state == NONE) {
                 state = USING;
                 View convertView = adapter.getView(dataIndex, view, NBannerView.this);
                 if (convertView == view) {
@@ -885,89 +919,9 @@ public class NBannerView extends ViewGroup {
             dataIndex = -1;
         }
 
-    }
-
-    public interface OnItemScrolledListener {
-        void onItemScrolled(NBannerView v, int dataIndex, float offset);
-    }
-
-    public interface OnItemSelectedListener {
-        void onItemSelected(NBannerView v, int dataIndex);
-    }
-
-    public static abstract class AnimationAdapter {
-
-        private NBannerView circularView;
-
-        protected final NBannerView getCircularView() {
-            return circularView;
+        public View getView(){
+            return view;
         }
-
-        protected final View getView(int indexOffset) {
-            if (null == circularView) {
-                return null;
-            }
-            final int centerIndex = circularView.getRecycleItemSize() / 2;
-            ItemWrapper targetItem = circularView.findItem(cycleIndex(centerIndex + indexOffset));
-            return (null != targetItem) ? targetItem.view : null;
-        }
-
-        protected final int getOffset(int indexOffset) {
-            if (null == circularView) {
-                return 0;
-            }
-            final View centerView = getView(0);
-            final View targetView = getView(indexOffset);
-            int offset = 0;
-            if (null != centerView && null != targetView) {
-                if (LinearLayout.VERTICAL == circularView.getOrientation()) {
-                    offset = targetView.getTop() - centerView.getTop() - circularView.getScrollY();
-                } else { // HORIZONTAL
-                    offset = targetView.getLeft() - centerView.getLeft() - circularView.getScrollX();
-                }
-            }
-            return offset;
-        }
-
-        protected final float getOffsetPercent(int indexOffset) {
-            final int maxOffset;
-            if (LinearLayout.VERTICAL == circularView.getOrientation()) {
-                maxOffset = getItemHeight() + circularView.spaceBetweenItems;
-            } else { // HORIZONTAL
-                maxOffset = getItemWidth() + circularView.spaceBetweenItems;
-            }
-            int targetOffset = getOffset(indexOffset);
-            return Math.abs(targetOffset) * 1.0f / maxOffset;
-        }
-
-        protected final int getItemWidth() {
-            if (null == circularView) {
-                return 0;
-            }
-            return circularView.getItemWidth();
-        }
-
-        protected final int getItemHeight() {
-            if (null == circularView) {
-                return 0;
-            }
-            return circularView.getItemHeight();
-        }
-
-        protected final int cycleIndex(int indexOffset) {
-            if (null == circularView) {
-                return indexOffset;
-            }
-            return circularView.cycleItemIndex(indexOffset);
-        }
-
-        protected final int getSize() {
-            return circularView.getRecycleItemSize();
-        }
-
-        protected abstract void onLayout(boolean changed);
-
-        protected abstract void onScrolled(int offset);
 
     }
 }

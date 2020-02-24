@@ -1,6 +1,7 @@
 package com.zeke.kangaroo.utils;
 
 import android.graphics.PointF;
+import android.text.TextUtils;
 
 /**
  * author: King.Z <br>
@@ -84,5 +85,97 @@ public class MathUtil {
         points[1] = new PointF(pMiddle.x - xOffset, pMiddle.y + yOffset);
 
         return points;
+    }
+
+
+    public static int ceilToInt(float v) {
+        return (int) Math.ceil(v);
+    }
+
+    public static int roundToInt(float val) {
+        if (val >= 0) {
+            return (int) (val + 0.5f);
+        } else {
+            return (int) (val - 0.5f);
+        }
+    }
+
+    public static double tryParseDouble(String val, double defVal) {
+        if (TextUtils.isEmpty(val)) {
+            return defVal;
+        }
+        try {
+            return Double.parseDouble(val);
+        } catch (Exception ignore) {}
+        return defVal;
+    }
+
+    public static long tryParseHex(String val, long defVal) {
+        if (TextUtils.isEmpty(val)) {
+            return defVal;
+        }
+        try {
+            return Long.parseLong(val, 16);
+        } catch (Exception e) {
+        }
+        return defVal;
+    }
+
+    public static float tryParseFloat(String val, float defVal) {
+        if (TextUtils.isEmpty(val)) {
+            return defVal;
+        }
+        try {
+            return Float.parseFloat(val);
+        } catch (Exception ignore) {}
+        return defVal;
+    }
+
+    public static int roundToInt(double val) {
+        if (val >= 0) {
+            return (int) (val + 0.5);
+        } else {
+            return (int) (val - 0.5);
+        }
+    }
+
+    public static int constrain(int x, int min, int max) {
+        if (x > max) {
+            return max;
+        }
+        if (x < min) {
+            return min;
+        }
+        return x;
+    }
+
+    public static long roundToLong(double val) {
+        return Math.round(val);
+    }
+
+    public static long tryParseLong(String val) {
+        return tryParseLong(val, 0);
+    }
+
+    public static int tryParseInt(String val, int defVal) {
+        if (TextUtils.isEmpty(val)) {
+            return defVal;
+        }
+        try {
+            return Integer.parseInt(val);
+        } catch (Exception e) {
+        }
+        return defVal;
+    }
+
+    public static long tryParseLong(String val, long defVal) {
+        if (TextUtils.isEmpty(val)) {
+            return defVal;
+        }
+        try {
+            return Long.parseLong(val);
+        } catch (Exception e) {
+        }
+        return defVal;
     }
 }

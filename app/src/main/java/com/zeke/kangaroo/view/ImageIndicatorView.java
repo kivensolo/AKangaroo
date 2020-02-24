@@ -11,6 +11,9 @@ import java.util.List;
 
 /**
  * A simple indicator view of ImageView.
+ * @deprecated
+ *
+ * Replace by {@link com.zeke.kangaroo.magicindicator.MagicIndicator}
  */
 public class ImageIndicatorView extends LinearLayout {
 

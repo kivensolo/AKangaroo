@@ -27,7 +27,8 @@ import java.util.List;
  * 博客: http://hackware.lucode.net
  * Created by hackware on 2016/6/26.
  */
-public class CommonNavigator extends FrameLayout implements IPagerNavigator, NavigatorHelper.OnNavigatorScrollListener {
+public class CommonNavigator extends FrameLayout implements IPagerNavigator,
+        NavigatorHelper.OnNavigatorScrollListener {
     private HorizontalScrollView mScrollView;
     private LinearLayout mTitleContainer;
     private LinearLayout mIndicatorContainer;
@@ -36,30 +37,31 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     private CommonNavigatorAdapter mAdapter;
     private NavigatorHelper mNavigatorHelper;
 
-    /**
-     * 提供给外部的参数配置
+    /*
+      提供给外部的参数配置
      */
     /****************************************************/
-    private boolean mAdjustMode;   // 自适应模式，适用于数目固定的、少量的title
-    private boolean mEnablePivotScroll; // 启动中心点滚动
-    private float mScrollPivotX = 0.5f; // 滚动中心点 0.0f - 1.0f
-    private boolean mSmoothScroll = true;   // 是否平滑滚动，适用于 !mAdjustMode && !mFollowTouch
-    private boolean mFollowTouch = true;    // 是否手指跟随滚动
-    private int mRightPadding;
-    private int mLeftPadding;
-    private boolean mIndicatorOnTop;    // 指示器是否在title上层，默认为下层
-    private boolean mSkimOver;  // 跨多页切换时，中间页是否显示 "掠过" 效果
+    private boolean mAdjustMode;         // 自适应模式，适用于数目固定的、少量的title
+    private boolean mEnablePivotScroll;  // 启动中心点滚动
+    private float mScrollPivotX = 0.5f;  // 滚动中心点 0.0f - 1.0f
+    private boolean mSmoothScroll = true;// 是否平滑滚动，适用于 !mAdjustMode && !mFollowTouch
+    private boolean mFollowTouch = true; // 是否手指跟随滚动
+    private int mRightPadding;           // 导航器内容部分右Padding距离
+    private int mLeftPadding;            // 导航器内容部分左Padding距离
+    private boolean mIndicatorOnTop;     // 指示器是否在title上层，默认为下层
+    private boolean mSkimOver;           // 跨多页切换时，中间页是否显示 "掠过" 效果
     private boolean mReselectWhenLayout = true; // PositionData准备好时，是否重新选中当前页，为true可保证在极端情况下指示器状态正确
     /****************************************************/
 
     // 保存每个title的位置信息，为扩展indicator提供保障
-    private List<PositionData> mPositionDataList = new ArrayList<PositionData>();
+    private List<PositionData> mPositionDataList = new ArrayList<>();
 
     private DataSetObserver mObserver = new DataSetObserver() {
 
         @Override
         public void onChanged() {
-            mNavigatorHelper.setTotalCount(mAdapter.getCount());    // 如果使用helper，应始终保证helper中的totalCount为最新
+            mNavigatorHelper.setTotalCount(mAdapter.getCount());
+            // 如果使用helper，应始终保证helper中的totalCount为最新
             init();
         }
 
@@ -119,12 +121,15 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
 
         View root;
         if (mAdjustMode) {
-            root = LayoutInflater.from(getContext()).inflate(R.layout.pager_navigator_layout_no_scroll, this);
+            root = LayoutInflater.from(getContext())
+                    .inflate(R.layout.pager_navigator_layout_no_scroll, this);
         } else {
-            root = LayoutInflater.from(getContext()).inflate(R.layout.pager_navigator_layout, this);
+            root = LayoutInflater.from(getContext())
+                    .inflate(R.layout.pager_navigator_layout, this);
         }
 
-        mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);   // mAdjustMode为true时，mScrollView为null
+        // mAdjustMode为true时，mScrollView为null
+        mScrollView = (HorizontalScrollView) root.findViewById(R.id.scroll_view);
 
         mTitleContainer = (LinearLayout) root.findViewById(R.id.title_container);
         mTitleContainer.setPadding(mLeftPadding, 0, mRightPadding, 0);
@@ -138,7 +143,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
     }
 
     /**
-     * 初始化title和indicator
+     * 初始化titleView和indicatorView 数据
      */
     private void initTitlesAndIndicator() {
         for (int i = 0, j = mNavigatorHelper.getTotalCount(); i < j; i++) {
@@ -152,6 +157,7 @@ public class CommonNavigator extends FrameLayout implements IPagerNavigator, Nav
                 } else {
                     lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);
                 }
+                // 往ViewGroup add子view,会自动记录子view个数
                 mTitleContainer.addView(view, lp);
             }
         }

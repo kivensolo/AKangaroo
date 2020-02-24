@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
@@ -190,7 +191,12 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         return mStartInterpolator;
     }
 
-    public void setStartInterpolator(Interpolator startInterpolator) {
+    /**
+     * 设置Start的动画插值器
+     * @param startInterpolator 启动效果插值器，
+     *                          为null的情况下默认使用线性插值器
+     */
+    public void setStartInterpolator(@Nullable Interpolator startInterpolator) {
         mStartInterpolator = startInterpolator;
         if (mStartInterpolator == null) {
             mStartInterpolator = new LinearInterpolator();
@@ -201,7 +207,12 @@ public class LinePagerIndicator extends View implements IPagerIndicator {
         return mEndInterpolator;
     }
 
-    public void setEndInterpolator(Interpolator endInterpolator) {
+    /**
+     * 设置End的动画插值器
+     * @param endInterpolator 结束效果插值器，
+     *                          为null的情况下默认使用线性插值器
+     */
+    public void setEndInterpolator(@Nullable Interpolator endInterpolator) {
         mEndInterpolator = endInterpolator;
         if (mEndInterpolator == null) {
             mEndInterpolator = new LinearInterpolator();

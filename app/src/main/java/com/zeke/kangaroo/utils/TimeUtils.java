@@ -16,6 +16,75 @@ public class TimeUtils {
         throw new AssertionError();
     }
 
+
+    public static class ticketMarker {
+        static final int _MarkersLimitation = 64;
+        long[] _t = new long[_MarkersLimitation];
+        String[] _n = new String[_MarkersLimitation];
+        String _infoHdr;
+        int _pos = 0;
+        int _precision = 1000;
+
+        public ticketMarker() {
+            _infoHdr = "(ms) ";
+        }
+
+        public ticketMarker(String infoHdr, boolean ms) {
+            if (infoHdr == null) {
+                infoHdr = "";
+            }
+            if (ms) {
+                _infoHdr = infoHdr + "(ms) ";
+                _precision = 1000;
+            } else {
+                _infoHdr = infoHdr + "(us) ";
+                _precision = 1;
+            }
+        }
+
+        public void reset() {
+            _pos = 0;
+        }
+
+        public void mark() {
+            mark(null);
+        }
+
+        public void mark(String name) {
+            if (name == null) {
+                name = String.valueOf(_pos);
+            }
+            _n[_pos] = name;
+            _t[_pos] = timestamp_us();
+            ++_pos;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder sb = new StringBuilder();
+            sb.append(_infoHdr);
+            sb.append((_t[_pos - 1] - _t[0]) / _precision);
+            sb.append(" - ");
+            for (int i = 1; i < _pos; i++) {
+                if (i > 1) {
+                    sb.append(", ");
+                }
+                sb.append(_n[i]);
+                sb.append(":");
+                sb.append((_t[i] - _t[i - 1]) / _precision);
+            }
+            return sb.toString();
+        }
+    }
+
+    public static long timestamp() {
+        return System.nanoTime() / 1000000;
+    }
+
+    public static long timestamp_us() {
+        return System.nanoTime() / 1000;
+    }
+
     public static String seconds2time(long time) {
         int totalSeconds = (int) (time / 1000L);
         int seconds = totalSeconds % 60;
