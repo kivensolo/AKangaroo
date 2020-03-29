@@ -1,8 +1,13 @@
 # AKangaroo
 An agile development library.
 
-# 更新说明
-- 2020/1/14 添加Glide自定义的Transform
-- 2019/12/29 添加各类型CommonAdapter
-- 2019/12/29 初始版本建立，增加android工具类
+# Release Notes
+## 1.0.0
+- 初始版本建立，增加android工具类
+
+## 1.0.1
+- 添加各类型CommonAdapter
+- 添加Glide自定义的Transform
+
+## 1.0.2
 - 2020/2/16 增加MagicIndicator UI库
