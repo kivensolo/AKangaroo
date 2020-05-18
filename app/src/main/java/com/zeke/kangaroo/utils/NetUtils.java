@@ -1,7 +1,6 @@
 package com.zeke.kangaroo.utils;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +9,8 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -399,7 +400,7 @@ public class NetUtils {
                 ((i >> 24) & 0xFF);
     }
 
-	public static void openNetSettingActivity(Activity activity){
+	public static void openNetSettingActivity(AppCompatActivity activity){
 		Intent intent = new Intent("/");
 		ComponentName cm = new ComponentName("com.android.settings",
                 "com.android.settings.WirelessSettings");

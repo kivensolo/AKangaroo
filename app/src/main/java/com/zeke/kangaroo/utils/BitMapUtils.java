@@ -345,7 +345,7 @@ public class BitMapUtils {
         // 在src的右下角画入水印
         cv.drawBitmap(watermark, mark_x, mark_y, null);
         // save all clip
-        cv.save(Canvas.ALL_SAVE_FLAG);// 保存
+        cv.save();// 保存 Canvas.ALL_SAVE_FLAG
         // store
         cv.restore();// 存储
         return newb;
@@ -381,7 +381,7 @@ public class BitMapUtils {
         canvas.drawBitmap(target, src, dst, photoPaint);
 
         canvas.drawText(str, mark_x, mark_y, textPaint);
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.restore();
         return icon;
     }
@@ -1188,8 +1188,10 @@ public class BitMapUtils {
 
         Rect rectSrc = new Rect(0, 0, srcBitmap.getWidth(), srcBitmap.getHeight());
         Rect rectDst = new Rect(rectSrc);
-        canvas.saveLayer(0, 0, srcBitmap.getWidth(),
-                srcBitmap.getHeight(), paintShadow);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            canvas.saveLayer(0, 0, srcBitmap.getWidth(),
+                    srcBitmap.getHeight(), paintShadow);
+        }
         RectUtils.offsetRect(rectDst, offsetX, offsetY);
         RectF rectF = new RectF(rectDst);
         paintShadow.setShadowLayer(radius, 0, 0, shadowColor);

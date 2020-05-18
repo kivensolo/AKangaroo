@@ -16,7 +16,6 @@
 
 package com.zeke.kangaroo.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
 import android.media.MediaMetadataRetriever;
@@ -26,6 +25,8 @@ import android.view.Display;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.HashMap;
 
@@ -72,7 +73,7 @@ public class TvUtils {
      * @param activity Activity
      *                 @param videoView VideoView
      */
-    public void overScan(Activity activity, VideoView videoView) {
+    public void overScan(AppCompatActivity activity, VideoView videoView) {
         DisplayMetrics metrics = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int w = (int) (metrics.widthPixels * MediaDimensions.MEDIA_WIDTH);

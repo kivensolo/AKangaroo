@@ -1,6 +1,5 @@
 package com.zeke.kangaroo.view.popwindow;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -9,6 +8,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Copyright(C) 2016, 北京视达科科技有限公司
@@ -83,7 +84,7 @@ public class PopupController {
      * @param level 0.0f-1.0f
      */
     void setBackGroundLevel(float level) {
-        mWindow = ((Activity) context).getWindow();
+        mWindow = ((AppCompatActivity) context).getWindow();
         WindowManager.LayoutParams params = mWindow.getAttributes();
         params.alpha = level;
         mWindow.setAttributes(params);

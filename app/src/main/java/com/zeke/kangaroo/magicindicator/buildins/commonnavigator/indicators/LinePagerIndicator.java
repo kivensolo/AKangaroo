@@ -4,10 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+
+import androidx.annotation.Nullable;
 
 import com.zeke.kangaroo.magicindicator.FragmentContainerHelper;
 import com.zeke.kangaroo.magicindicator.buildins.ArgbEvaluatorHolder;

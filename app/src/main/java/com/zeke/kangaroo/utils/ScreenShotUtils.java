@@ -1,12 +1,13 @@
 package com.zeke.kangaroo.utils;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
 import android.widget.ScrollView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * author: King.Z <br>
@@ -47,7 +48,7 @@ public class ScreenShotUtils {
      * @param activity Activity
      * @return Bitmap
      */
-    public final Bitmap screenShot(Activity activity) {
+    public final Bitmap screenShot(AppCompatActivity activity) {
         if (null == activity) {
             throw new IllegalArgumentException("parameter can't be null.");
         }
