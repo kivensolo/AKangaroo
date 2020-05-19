@@ -8,8 +8,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.5.3'
-        // jCenter publisher
-        classpath 'com.novoda:bintray-release:0.8.1'
+        // jCenter publisher  https://github.com/novoda/bintray-release
+        classpath 'com.novoda:bintray-release:0.9.2'
     }
 }
 

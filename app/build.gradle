@@ -81,6 +81,7 @@ task clearJar(type: Delete) {
     }
 }
 
+// 设置打包任务的分组
 def jarGroup = "jars"
 makeJar.setGroup(jarGroup)
 clearJar.setGroup(jarGroup)
