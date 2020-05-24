@@ -128,7 +128,7 @@ public abstract class CommonRecyclerAdapter<T> extends
         return this;
     }
 
-    public static final class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private SparseArray<View> holder = new SparseArray<>();
 
         public ViewHolder(View itemView) {

@@ -2,6 +2,9 @@
 An agile development library.
 
 # Release Notes
+## 1.0.4
+- 2020/5/24 调整CommonRecyclerAdapter适配器的ViewHolder内部类
+
 ## 1.0.3
 - 2020/5/18 迁移至AndroidX
 
