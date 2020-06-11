@@ -5,7 +5,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 //输出jar/aar包的配置
 //[baseName]-[appendix]-[version]-[classifier].[extension]
-def libVersion = "1.0.4"
+def libVersion = "1.0.5"
 def jarFileBaseName = "kangaroo"
 def jarType = "debug"
 
@@ -42,8 +42,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly 'androidx.recyclerview:recyclerview:1.0.0'
-    compileOnly 'androidx.appcompat:appcompat:1.0.0'
+    compileOnly 'androidx.recyclerview:recyclerview:1.1.0'
+    compileOnly 'androidx.appcompat:appcompat:1.1.0'
     compileOnly "com.github.bumptech.glide:glide:4.5.0"
 }
 
