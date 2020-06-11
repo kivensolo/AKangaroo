@@ -1,12 +1,12 @@
 package com.zeke.kangaroo.utils;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.View;
 import android.widget.ScrollView;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -93,5 +93,41 @@ public class ScreenShotUtils {
        scrollView.draw(canvas);
        return bitmap;
    }
+
+    /**
+     * 获取当前屏幕截图，包含状态栏
+     */
+    public static Bitmap snapShotWithStatusBar(Activity activity) {
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bmp = view.getDrawingCache();
+        int width = ScreenDisplayUtils.getScreenWidth(activity);
+        int height = ScreenDisplayUtils.getScreenHeight(activity);
+        Bitmap bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
+        view.destroyDrawingCache();
+        return bp;
+    }
+
+    /**
+     * 获取当前屏幕截图，不包含状态栏
+     */
+    public static Bitmap snapShotWithoutStatusBar(Activity activity) {
+        View view = activity.getWindow().getDecorView();
+        view.setDrawingCacheEnabled(true);
+        view.buildDrawingCache();
+        Bitmap bmp = view.getDrawingCache();
+        Rect frame = new Rect();
+        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
+        int statusBarHeight = frame.top;
+
+        int width = ScreenDisplayUtils.getScreenWidth(activity);
+        int height = ScreenDisplayUtils.getScreenHeight(activity);
+        Bitmap bp = null;
+        bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height
+                - statusBarHeight);
+        view.destroyDrawingCache();
+        return bp;
+    }
 
 }
