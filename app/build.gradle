@@ -5,7 +5,7 @@ apply plugin: 'com.novoda.bintray-release'
 
 //输出jar/aar包的配置
 //[baseName]-[appendix]-[version]-[classifier].[extension]
-def libVersion = "1.0.5"
+def libVersion = "1.0.6"
 def jarFileBaseName = "kangaroo"
 def jarType = "debug"
 

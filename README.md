@@ -2,6 +2,9 @@
 An agile development library.
 
 # Release Notes
+## 1.0.6
+- 2020/7/3 增加KLog打印堆栈信息和格式化Json
+
 ## 1.0.4
 - 2020/5/24 调整CommonRecyclerAdapter适配器的ViewHolder内部类
 
