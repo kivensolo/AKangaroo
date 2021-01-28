@@ -24,6 +24,8 @@ public class ZLog {
     private static final String LINE_SEPARATOR;
     private static final int JSON_INDENT = 4;
     private static String realTag = TAG;
+    // TAG是否使用默认值
+    private static boolean enableDefaultTAG = true;
 
     static {
         LINE_SEPARATOR = System.getProperty("line.separator");
@@ -110,6 +112,10 @@ public class ZLog {
      */
     public static boolean needPrintLog(LogType type) {
         return isDebug && (type.ordinal() >= _logLevel.ordinal());
+    }
+
+    public static void setDefaultTagEnable(boolean enable) {
+        enableDefaultTAG = enable;
     }
 
     /**
@@ -201,7 +207,9 @@ public class ZLog {
         String fileName = stackTrace[index].getFileName();
         String methodName = stackTrace[index].getMethodName();
         int lineNumber = stackTrace[index].getLineNumber();
-        realTag = TAG.equals(tag) ? fileName : tag;
+        if(!enableDefaultTAG){
+            realTag = TAG.equals(tag) ? fileName : tag;
+        }
         // 大写第一个字母
         if(methodName.length() > 1){
             methodName = methodName.substring(0, 1).toUpperCase() + methodName.substring(1);
