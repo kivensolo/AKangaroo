@@ -1,21 +1,12 @@
 package com.zeke.kangaroo.utils;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import javax.net.ssl.HttpsURLConnection;
+import java.io.*;
 import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
@@ -23,8 +14,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by KingZ on 2015/11/4.
@@ -1461,6 +1450,38 @@ public class FileUtils {
                     os.close();
                 }
             } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 读取Asset目录下的文件
+     * @param fileName  文件名
+     * @param assetManager  AssetManager
+     * @return 文件字节数组
+     * @throws IOException
+     */
+     public static byte[] loadAssetFile(AssetManager assetManager, String fileName) throws IOException {
+        InputStream input = null;
+        try {
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            input = assetManager.open(fileName);
+            byte[] buffer = new byte[1024];
+            int size;
+            while (-1 != (size = input.read(buffer))) {
+                output.write(buffer, 0, size);
+            }
+            output.flush();
+            return output.toByteArray();
+        } catch (FileNotFoundException e) {
+            return null;
+        } finally {
+            try {
+                if (null != input) {
+                    input.close();
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
