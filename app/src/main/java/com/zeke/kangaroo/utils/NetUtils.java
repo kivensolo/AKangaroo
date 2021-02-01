@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.text.TextUtils;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
@@ -331,7 +330,7 @@ public class NetUtils {
      * 读取网口工作状态
      * @return true: UP false:DOWN
      *
-     * C:\\Users\\zhi.wang adb shell netcfg
+     * C:\\Users\\kingz adb shell netcfg
      *   sit0     DOWN     0.0.0.0/0   0x00000080 00:00:00:00:00:00
      *   eth0     UP     10.0.2.15/24  0x00001043 52:54:00:12:34:56
      *   lo       UP     127.0.0.1/8   0x00000049 00:00:00:00:00:00
@@ -411,7 +410,7 @@ public class NetUtils {
 		activity.startActivityForResult(intent, 0);
 	}
 
-	 /*
+	 /**
       * 判断是否有外网连接（普通方法不能判断外网的网络是否连接，比如连接上局域网）
       * @ip 目标ip地址
       * @return
