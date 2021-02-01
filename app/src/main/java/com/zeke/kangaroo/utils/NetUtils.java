@@ -272,7 +272,7 @@ public class NetUtils {
             wifimanage.setWifiEnabled(true);
         }
         WifiInfo wifiinfo = wifimanage.getConnectionInfo();
-        return intToIp(wifiinfo.getIpAddress());
+        return formatIpAddress(wifiinfo.getIpAddress());
     }
 
 
@@ -393,11 +393,13 @@ public class NetUtils {
         return ipaddress;
     }
 
-    private static String intToIp(int i) {
-        return (i & 0xFF) + "." +
-                ((i >> 8) & 0xFF) + "." +
-                ((i >> 16) & 0xFF) + "." +
-                ((i >> 24) & 0xFF);
+    private static String formatIpAddress(int ipAddress) {
+        return String.format(Locale.ENGLISH,
+                "%d.%d.%d.%d",
+                (ipAddress & 0xFF),
+                ((ipAddress >> 8) & 0xff),
+                ((ipAddress >> 16) & 0xff),
+                ((ipAddress >> 24) & 0xff));
     }
 
 	public static void openNetSettingActivity(AppCompatActivity activity){
