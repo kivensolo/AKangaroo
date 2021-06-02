@@ -42,7 +42,7 @@ ext["signing.secretKeyRingFile"] = ''
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
 
-File secretPropsFile = project.rootProject.file('local.properties')
+File secretPropsFile = project.rootProject.file('/publish/secretPropFile')
 if (secretPropsFile.exists()) {
     println "Found secret props file, loading props"
     Properties p = new Properties()
