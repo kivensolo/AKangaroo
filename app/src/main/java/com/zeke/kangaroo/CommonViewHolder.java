@@ -9,7 +9,9 @@ import android.view.ViewGroup;
  * author: King.Z <br>
  * date:  2016/8/18 20:16 <br>
  * description: 通用ViewHolder
+ * @deprecated 这是老版本的CommonViewHolder， replace by quick adapter library.
  */
+@Deprecated()
 public class CommonViewHolder {
 
     /**
