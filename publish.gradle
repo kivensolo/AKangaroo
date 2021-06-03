@@ -1,0 +1,136 @@
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+task clearJar(type: Delete) {
+    // 删除libs目录数据
+    //delete 'build/libs/'
+    // 有选择性的删除
+    FileTree tree = fileTree("build/libs/")
+    tree.visit {
+        element ->
+            if (element.getName().endsWith(".jar") &&
+                    !element.getName().contains("javadoc") &&
+                    !element.getName().contains("sources")) {
+                println "$element.file.name" + " " + element.getName()
+                delete element.file
+            }
+    }
+}
+
+task androidSourcesJar(type: Jar) {
+
+    classifier = 'sources'
+    from android.sourceSets.main.java.source
+
+    exclude "**/R.class"
+    exclude "**/BuildConfig.class"
+}
+
+//// 设置打包任务的分组
+def jarGroup = "jars"
+androidSourcesJar.setGroup(jarGroup)
+
+ext {
+    PUBLISH_ARTIFACT_ID = "kangaroo"
+    PUBLISH_GROUP_ID = 'io.github.kivensolo'
+    PUBLISH_VERSION = '1.0.7'
+}
+
+ext["signing.keyId"] = ''
+ext["signing.password"] = ''
+ext["signing.secretKeyRingFile"] = ''
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+
+File secretPropsFile = project.rootProject.file('/publish/secretPropFile')
+if (secretPropsFile.exists()) {
+    println "Found secret props file, loading props"
+    Properties p = new Properties()
+    p.load(new FileInputStream(secretPropsFile))
+    p.each { name, value ->
+        ext[name] = value
+    }
+} else {
+    println "No props file, loading env vars"
+}
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            // The coordinates of the library, being set from variables that
+            // we'll set up in a moment
+            groupId PUBLISH_GROUP_ID
+            artifactId PUBLISH_ARTIFACT_ID
+            version PUBLISH_VERSION
+
+            // Two artifacts, the `aar` and the sources
+            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
+            artifact androidSourcesJar
+
+            // Self-explanatory metadata for the most part
+            pom {
+                name = PUBLISH_ARTIFACT_ID
+                description = 'An agile development library'
+                // If your project has a dedicated site, use its URL here
+                url = 'https://github.com/kivensolo/AKangaroo'
+                licenses {
+                    license {
+                        //协议类型，一般默认Apache License2.0的话不用改：
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'KingZ'
+                        name = 'KingZ'
+                        email = '760553478@qq.com'
+                    }
+                }
+                // Version control info, if you're using GitHub, follow the format as seen here
+                scm {
+                    //修改成你的Git地址：
+                    connection = 'scm:git:github.com/kivensolo/AKangaroo.git'
+                    developerConnection = 'scm:git:ssh://github.com/kivensolo/AKangaroo.git'
+                    //分支地址：
+                    url = 'https://github.com/kivensolo/AKangaroo/tree/master'
+                }
+                // A slightly hacky fix so that your POM will include any transitive dependencies
+                // that your library builds upon
+                withXml {
+                    def dependenciesNode = asNode().appendNode('dependencies')
+
+                    project.configurations.implementation.allDependencies.each {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        // The repository to publish to, Sonatype/MavenCentral
+        maven {
+            // This is an arbitrary name, you may also use "mavencentral" or
+            // any other name that's descriptive for you
+            name = "mavencentral"
+
+            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            // You only need this if you want to publish snapshots, otherwise just set the URL
+            // to the release repo directly
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+
+            // The username and password we've fetched earlier
+            credentials {
+                username ossrhUsername
+                password ossrhPassword
+            }
+        }
+    }
+}
+signing {
+    sign publishing.publications
+}
