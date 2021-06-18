@@ -7,8 +7,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * 校验工具类
  * date 16/10/4 下午4:15
- * description 身份证号码，邮箱，电话号码 的严格验证
+ * description
+ *  常用校验：身份证号码，邮箱，电话号码 的严格验证
  */
 public class CheckUtils {
     //    位权值数组
@@ -146,7 +148,7 @@ public class CheckUtils {
      * @param mobiles 手机号码
      * @return 是否合法
      */
-    public static boolean checkMobileNO(String mobiles){
+    public static boolean checkMobileNUM(String mobiles){
 
         Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[0-9])|(16[0-9])|(17[0-9])|(18[0-9])|(19[0-9]))\\d{8}$");
         Matcher m = p.matcher(mobiles);
