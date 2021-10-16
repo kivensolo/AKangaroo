@@ -12,34 +12,43 @@ import android.view.ViewParent;
 import java.lang.reflect.Method;
 
 public final class UIUtils {
+    @SuppressLint("StaticFieldLeak")
+    private static Context ctx;
+
+    public static void init(Context context){
+        ctx = context;
+    }
+
     private final static String TAG = "UIUtils";
 
-    public static int dip2px(Context context, float dpValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dpValue * scale + 0.5f);
+    public static int dip2px(float dpValue) {
+        checkInit();
+        return (int) (dpValue * getDensity() + 0.5f);
     }
 
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
+    public static int px2dip(float pxValue) {
+        checkInit();
+        return (int) (pxValue / getDensity() + 0.5f);
     }
 
-    public static int px2sp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (pxValue / fontScale + 0.5f);
+    public static int px2sp(float pxValue) {
+        checkInit();
+        return (int) (pxValue / getScaledDensity() + 0.5f);
     }
 
-    public static int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
+    public static int sp2px(float spValue) {
+        checkInit();
+        return (int) (spValue * getScaledDensity() + 0.5f);
     }
 
-    public static int getScreenWidth(Context context) {
-        return context.getResources().getDisplayMetrics().widthPixels;
+    public static int getScreenWidth() {
+        checkInit();
+        return ctx.getResources().getDisplayMetrics().widthPixels;
     }
 
-    public static int getScreenHeight(Context context) {
-        return context.getResources().getDisplayMetrics().heightPixels;
+    public static int getScreenHeight() {
+        checkInit();
+        return ctx.getResources().getDisplayMetrics().heightPixels;
     }
 
     public static View getFirstFocusableView(ViewParent parent) {
@@ -123,6 +132,22 @@ public final class UIUtils {
             ZLog.i(TAG, "App hideStatusBar OK");
         } catch (Exception localException2) {
             localException2.printStackTrace();
+        }
+    }
+
+    private static float getDensity(){
+        checkInit();
+        return ctx.getResources().getDisplayMetrics().density;
+    }
+
+    private static float getScaledDensity(){
+        checkInit();
+        return ctx.getResources().getDisplayMetrics().scaledDensity;
+    }
+
+    private static void checkInit(){
+        if(ctx == null){
+            throw new IllegalStateException("Utils inner context is null, You must call init() at first.");
         }
     }
 

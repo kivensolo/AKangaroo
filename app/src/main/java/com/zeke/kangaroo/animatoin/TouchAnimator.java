@@ -25,7 +25,7 @@ public final class TouchAnimator {
     private View animObject;
 
     public TouchAnimator(View view) {
-        zoom_offset = UIUtils.dip2px(view.getContext(), zoom_offset);
+        zoom_offset = UIUtils.dip2px(zoom_offset);
         down_anim = new AnimatorSet();
         up_anim = new AnimatorSet();
         animObject = view;

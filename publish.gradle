@@ -1,3 +1,12 @@
+/**
+ * 发布说明：
+ * Step-1: 打包AAR 的 assemble命令
+ * Step-2：发布AAR 的 publishReleasePublicationToMavenLocalRepository命令
+ * Step-3：登录新版Nexus Repository Manager(https://s01.oss.sonatype.org/#welcome)，
+ *         在左侧Staging Repositories页面（标注1）找到自己的group id，选中，就能看到提交的信息.
+ * Step-4:一般2个小时后可以在https://search.maven.org/查询发布结果
+ */
+
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
@@ -33,7 +42,7 @@ androidSourcesJar.setGroup(jarGroup)
 ext {
     PUBLISH_ARTIFACT_ID = "kangaroo"
     PUBLISH_GROUP_ID = 'io.github.kivensolo'
-    PUBLISH_VERSION = '1.0.7'
+    PUBLISH_VERSION = '1.0.8'
 }
 
 ext["signing.keyId"] = ''

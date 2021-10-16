@@ -48,10 +48,10 @@ public class SpiralProgressView extends View{
     }
 
 	/** 第一个斜线的起始位置 **/
-	private float first_diagonal_line = UIUtils.dip2px(getContext(),720)/27 ; // mWidth / 27
+	private float first_diagonal_line = UIUtils.dip2px(720)/27 ; // mWidth / 27
 
 	/** 第一个斜线的底边最左端 **/
-	private float first_diagonal_line_left = first_diagonal_line - UIUtils.dip2px(getContext(),720)/80;	//first_diagonal_line - mWidth / 80
+	private float first_diagonal_line_left = first_diagonal_line - UIUtils.dip2px(720)/80;	//first_diagonal_line - mWidth / 80
 
 	/** 进度条当前值 */
 	private float currentCount;

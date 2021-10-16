@@ -39,8 +39,8 @@ public class RotationProgress extends ProgressDialog{
 
         setContentView(R.layout.progress_dialog);
         android.view.WindowManager.LayoutParams params = getWindow().getAttributes();
-        params.width = UIUtils.dip2px(getContext(),200);
-        params.height = UIUtils.dip2px(getContext(),200);
+        params.width = UIUtils.dip2px(200);
+        params.height = UIUtils.dip2px(200);
         getWindow().setAttributes(params);
 
         initViews(savedInstanceState);
@@ -57,8 +57,8 @@ public class RotationProgress extends ProgressDialog{
 
         //ImageView设置
         iv_progress = (ImageView) findViewById(R.id.iv_progress);
-        iv_progress.getLayoutParams().width = UIUtils.dip2px(getContext(),100);
-        iv_progress.getLayoutParams().height = UIUtils.dip2px(getContext(),100);
+        iv_progress.getLayoutParams().width = UIUtils.dip2px(100);
+        iv_progress.getLayoutParams().height = UIUtils.dip2px(100);
             //设置尺寸Type(是一个枚举类型的)
         iv_progress.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         iv_progress.setBackgroundDrawable(mContext.getResources().getDrawable(R.drawable.loading_new));
