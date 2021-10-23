@@ -31,6 +31,8 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 
+import com.zeke.kangaroo.zlog.ZLog;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

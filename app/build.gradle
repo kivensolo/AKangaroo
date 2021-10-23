@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
 apply from: '../publish.gradle'
 
 android {
@@ -25,6 +26,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    //XLog
+    api 'com.elvishew:xlog:1.11.0'
     compileOnly 'androidx.recyclerview:recyclerview:1.1.0'
     compileOnly 'androidx.appcompat:appcompat:1.1.0'
     compileOnly "com.github.bumptech.glide:glide:4.5.0"

@@ -14,6 +14,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.zeke.kangaroo.zlog.ZLog;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
