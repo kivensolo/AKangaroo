@@ -9,8 +9,6 @@
 
 //Maven Publish Plugin  https://docs.gradle.org/current/userguide/publishing_maven.html
 apply plugin: 'maven-publish'
-//签名插件，为每一个产物生成签名https://docs.gradle.org/current/userguide/signing_plugin.html#signing_plugin
-apply plugin: 'signing'
 
 task clearJar(type: Delete) {
     // 删除libs目录数据
@@ -65,112 +63,87 @@ if (secretPropsFile.exists()) {
     println "No props file, loading env vars"
 }
 
-//由 PublishingExtension 支持的闭包
-publishing {
-    // maven-public 插件提供了publications类型的maven发布，详细查看：
-    // https://docs.gradle.org/current/userguide/dependency_management_terminology.html#sub:terminology_publication
-    publications {
-        release(MavenPublication){
-            // A: Maven publication的标准元数据设置
-            groupId  PUBLISH_GROUP_ID
-            artifactId PUBLISH_ARTIFACT_ID
-            version PUBLISH_VERSION
 
-            // B: Custom Artifacts 这里自定义2个产物 `aar` 包和源码
-            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
-            artifact androidSourcesJar
-        }
-//        mavenLibrary(MavenPublication) {
-//            // A: Maven publication的标准元数据设置
-//            groupId  PUBLISH_GROUP_ID
-//            artifactId PUBLISH_ARTIFACT_ID
-//            version PUBLISH_VERSION
-//
-//            // B: Custom Artifacts 这里自定义2个产物 `aar` 包和源码
-//            artifact("$buildDir/outputs/aar/${project.getName()}-release.aar")
-//            artifact androidSourcesJar
-//
-//            // C: 自定义POM文件
-//            // https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPom.html
-//            pom {
-//                // --------- Properties Start
-//                name = PUBLISH_ARTIFACT_ID
-//                description = 'An agile development library'
-//                // If your project has a dedicated site, use its URL here
-//                url = 'https://github.com/kivensolo/AKangaroo'
-//                // --------- Properties End
-//
-//                licenses { //配置此POM表示的发布许可证
-//                    license {
-//                        //协议类型，一般默认Apache License2.0的话不用改：
-//                        name = 'The Apache License, Version 2.0'
-//                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-//                    }
-//                }
-//
-//                developers { //发布配置开发人员信息
-//                    developer {
-//                        id = 'KingZ'
-//                        name = 'KingZ'
-//                        email = '760553478@qq.com'
-//                    }
-//                }
-//
-//                scm { // Source Control Management
-//                    //修改成自己的Git地址：
-//                    connection = 'scm:git:github.com/kivensolo/AKangaroo.git'
-//                    developerConnection = 'scm:git:ssh://github.com/kivensolo/AKangaroo.git'
-//                    //分支地址：
-//                    url = 'https://github.com/kivensolo/AKangaroo/tree/master'
-//                }
-//
-//                // A slightly hacky fix so that your POM will include any transitive dependencies
-//                // that your library builds upon
-//                withXml {
-//                    def dependenciesNode = asNode().appendNode('dependencies')
-//
-//                    project.configurations.implementation.allDependencies.each {
-//                        def dependencyNode = dependenciesNode.appendNode('dependency')
-//                        dependencyNode.appendNode('groupId', it.group)
-//                        dependencyNode.appendNode('artifactId', it.name)
-//                        dependencyNode.appendNode('version', it.version)
-//                    }
-//                }
-//            }
-//        }
-    }
+afterEvaluate {
+    publishing {
+        // maven-public 插件提供了publications类型的maven发布，详细查看：
+        // https://docs.gradle.org/current/userguide/publishing_maven.html
+        // https://docs.gradle.org/current/userguide/dependency_management_terminology.html#sub:terminology_publication
+        publications {
 
-    //发布仓库配置
-    repositories {
-        // 通过 RepositoryHandler API进行自定义sonatype仓库配置
-        maven {
-            // 一个任意的名称，可以使用“mavencentral”或任何其他描述性的名称
-            name = "sonatypeMavencentral"
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
 
-            def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+                // A: Maven publication的标准元数据设置
+                groupId PUBLISH_GROUP_ID
+                artifactId PUBLISH_ARTIFACT_ID  // 依赖库的名称（jitpack 都不会使用到）
+                version PUBLISH_VERSION         // jitpack不会使用到，只是我们开发者自己查看
 
-            //账户凭证信息
-            credentials {
-                username ossrhUsername
-                password ossrhPassword
+                // B: Custom Artifacts 源码
+                artifact androidSourcesJar
+
+                // C: 自定义POM文件
+                // https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPom.html
+                pom {
+                    // --------- Properties Start
+                    name = PUBLISH_ARTIFACT_ID
+                    description = 'An agile development library'
+                    // If your project has a dedicated site, use its URL here
+                    url = 'https://github.com/kivensolo/AKangaroo'
+                    // --------- Properties End
+                    licenses { //配置此POM表示的发布许可证
+                        license {
+                            //协议类型，一般默认Apache License2.0的话不用改：
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers { //发布配置开发人员信息
+                        developer {
+                            id = 'KingZ'
+                            name = 'KingZ'
+                            email = '760553478@qq.com'
+                        }
+                    }
+                }
+            }
+
+            // Creates a Maven publication called “debug”.
+            debug(MavenPublication){
+                from components.debug
+                groupId PUBLISH_GROUP_ID
+                artifactId PUBLISH_ARTIFACT_ID + "-debug"  // 依赖库的名称（jitpack 都不会使用到）
+                version PUBLISH_VERSION         // jitpack不会使用到，只是我们开发者自己查看
+
+//                artifact("$buildDir/outputs/aar/${project.getName()}-release.aar") // 加了这个要报错
+                artifact androidSourcesJar
+
+                // https://docs.gradle.org/current/dsl/org.gradle.api.publish.maven.MavenPom.html
+                pom {
+                    // --------- Properties Start
+                    name = PUBLISH_ARTIFACT_ID
+                    description = 'An agile development library'
+                    // If your project has a dedicated site, use its URL here
+                    url = 'https://github.com/kivensolo/AKangaroo'
+                    // --------- Properties End
+                    licenses { //配置此POM表示的发布许可证
+                        license {
+                            //协议类型，一般默认Apache License2.0的话不用改：
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers { //发布配置开发人员信息
+                        developer {
+                            id = 'KingZ'
+                            name = 'KingZ'
+                            email = '760553478@qq.com'
+                        }
+                    }
+                }
             }
         }
-
-        // 本地仓库配置
-        maven {
-            version PUBLISH_VERSION
-            println "Config local maven, Version($version) is SNAPSHOT? ${version.endsWith('SNAPSHOT')}"
-            name = "projectLocal"
-            def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
-            def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-        }
     }
 }
-
-signing {
-    sign publishing.publications
-}
-
