@@ -2,6 +2,8 @@
 An agile development library.
 
 # Release Notes
+最新版本:[![](https://jitpack.io/v/kivensolo/AKangaroo.svg)](https://jitpack.io/#kivensolo/AKangaroo)
+
 ## 1.0.6
 - 2020/7/3 增加KLog打印堆栈信息和格式化Json
 
