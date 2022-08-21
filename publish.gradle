@@ -41,7 +41,7 @@ androidSourcesJar.setGroup(jarGroup)
 ext {
     PUBLISH_ARTIFACT_ID = "kangaroo"
     PUBLISH_GROUP_ID = 'io.github.kivensolo'
-    PUBLISH_VERSION = '1.0.10' //1.0.10-SNAPSHOT 表示快照版本
+    PUBLISH_VERSION = '1.0.11'
 }
 
 ext["signing.keyId"] = ''
