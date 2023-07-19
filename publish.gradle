@@ -1,11 +1,11 @@
 /**
+ * 发布仓库已经在22年迁移至了JitPack:https://jitpack.io/#kivensolo/AKangaroo
+ * 原有sonatype(https://s01.oss.sonatype.org/)的已废弃。
+ *
  * 发布说明：
- * Step-1: 打包AAR 的 assemble命令
- * Step-2：发布AAR 的 publishMavenLibraryPublicationToSonatypeMavencentralRepository 命令
- * Step-3：登录新版Nexus Repository Manager(https://s01.oss.sonatype.org/#welcome)，
- *         在左侧Staging Repositories页面（标注1）找到自己的group id，选中，就能看到提交的信息.
- * Step-4:一般2个小时后可以在https://search.maven.org/查询发布结果
- */
+ * 1. 直接在Github上创建Release发行版本;
+ * 2. jitpack因为有了访问Token，所以可以直接去拉发行版本代码并构建;
+ * */
 
 //Maven Publish Plugin  https://docs.gradle.org/current/userguide/publishing_maven.html
 apply plugin: 'maven-publish'
