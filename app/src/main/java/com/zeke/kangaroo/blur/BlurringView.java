@@ -13,6 +13,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.zeke.kangaroo.R;
 
 
@@ -27,7 +28,9 @@ import com.zeke.kangaroo.R;
  * A: Renderscript has been deprecated in API level 31. Please refer to the <a
  * href="https://developer.android.com/guide/topics/renderscript/migration-guide">migration
  * guide</a> for the proposed alternatives.
- * B：Blurred radius Range (0 < r <= 25)  Why?????????
+ *
+ * B：Blurred radius Range (0 < r <= 25)
+ * 过大的模糊半径没有意义，图片会非常模糊，且会增加计算量
  */
 public class BlurringView extends View {
 
